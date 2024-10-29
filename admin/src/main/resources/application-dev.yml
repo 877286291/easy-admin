@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/easy_admin?serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      database: 0
+      # 连接超时时间
+      timeout: 10s
+      lettuce:
+        pool:
+          # 连接池最大连接数
+          max-active: 200
+          # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-wait: -1ms
+          # 连接池中的最大空闲连接
+          max-idle: 10
+          # 连接池中的最小空闲连接
+          min-idle: 0
+# 项目配置
+easy:
+  admin:
+    cache:
+      enabled: true
+      prefix: "easy_admin"
+    security:
+      jwt-secret: "e05b35d375212afc4831827cf06ab5451662aebefdbccf35b9fd64dc91f4ad0efdb4b9579ee0f0d13b37e5b19cf57a47cf5ffead55364340838936ab38c603892efda59e80d0edb7a96f8c0a542d9b2193506b47a7213d3aad33409726295de49e002d2277b5b363e748c88893ecb44704253d9fd2e93061ba83e6c1530256facfb390071d8a934343120494cacac6ad17ff1dc5b59be4f4e788434f2abed9948476638b1f8bf2cf7d4a90f17b7704d4f55907dc8b4d1ab077d2aeff0729297d3e9fd432232018cca90feb1b958a34e6d29d5ada81f82a5c927d2e8da390d74ca6abf0293cdafcf24d5cffac604e7540f3c281f405bc8e8e3e704bcb88435566"
+      login:
+        rsa-private-key: "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAJk1uv63WeMVAwQLBwmJaLYZwc/w8zXkGRNea3MO/rAylrqPvKIEbc3UMLmXW/QfCBmHZxxgqZ8cf0qonSliOmICzolQgtnE3n6tWNm9FoFJfK8Xe3bbMfI7pvNUVP8D8JNZS4EcDnyfIfAfsz54MsN046Ek8rEszYVfzHRT6an/AgMBAAECgYArfeEzZYESwWg1wZuhzWv4JZ+rE882wSWNJgSCiQMrqXC4TQ1TQMaa411hkeH8jsKR3KocmCQOktxfqTXUBZpkv8q2AFQPx7JdHzcu9jd/PTIJa0rxCtDSscrgrv37BXL0FEdaaRlu8oK7CzNN/lZMNlX5ulQsCTmA//r/fwWx4QJBAMlZyfeFXvU27RyaRmCiIAb7KAtlMjhwvIMSXkqryxE6X6cXD5XwJKag3z8SYeBTMAT2IlIPyWFk2YLxG5r5T3UCQQDCywdM9m7QudTODpOd+cgRjl8Rh/rpEpiYag5E9aDiSDUHFlqCmRYkLzJ7Q4yYQS9q1XDy8xw69SmrCz2A//kjAkAprqPH0N1SiBdX53wQPx/AMjgc+8sEshnkTGYmsR+tplbs4TJByN/desocZXLLnI0BSe7a7Be1SMpaeA1N7LSNAkBjZTf/dIvNI9XLozJ93LPTCYPHLUzB20RUGWHYnEGQ1WmBiU178GOU6SRoM2qtUi3A5NKylYylJO4zIhQrG/JjAkAydaWgLI6PyVTG0WPWyNT74mKilpZ9KXEwRUxzPFpLhy7DoY769c057qFd7UFnJExzIUORPf3BOErAngNPBZOO"
+        rsa-public-key: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCZNbr+t1njFQMECwcJiWi2GcHP8PM15BkTXmtzDv6wMpa6j7yiBG3N1DC5l1v0HwgZh2ccYKmfHH9KqJ0pYjpiAs6JUILZxN5+rVjZvRaBSXyvF3t22zHyO6bzVFT/A/CTWUuBHA58nyHwH7M+eDLDdOOhJPKxLM2FX8x0U+mp/wIDAQAB"
+# sa-token配置
+sa-token:
+  # token 名称（同时也是 cookie 名称）
+  token-name: easy_admin
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 2592000
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: true
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: tik
+  # 是否输出操作日志
+  is-log: true
