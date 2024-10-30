@@ -33,6 +33,11 @@ public class R<T> implements Serializable {
     public static final Integer PERMISSION_DENIED = 1002;
 
     /**
+     * 角色不存在 1003
+     */
+    public static final Integer ROLE_NOT_FOUND = 1003;
+
+    /**
      * 成功标志
      */
     @Schema(description = "成功标志")

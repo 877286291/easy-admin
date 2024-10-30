@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.houyuji.common.api.JsfPage;
+import top.houyuji.common.base.R;
 import top.houyuji.common.base.exception.ServiceException;
 import top.houyuji.common.base.utils.CollectionUtil;
 import top.houyuji.common.base.utils.StrUtil;
@@ -18,12 +19,15 @@ import top.houyuji.sys.domain.dto.RoleSmallDTO;
 import top.houyuji.sys.domain.dto.UserDTO;
 import top.houyuji.sys.domain.dto.UserRestPwdDTO;
 import top.houyuji.sys.domain.dto.UserSaveDTO;
+import top.houyuji.sys.domain.entity.SysRole;
 import top.houyuji.sys.domain.entity.SysUser;
 import top.houyuji.sys.domain.query.UserQuery;
 import top.houyuji.sys.mapper.SysUserMapper;
 import top.houyuji.sys.service.mapstruct.SysUserMapstruct;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,6 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysUserService extends BaseService<SysUserMapper, SysUser> {
     private final SysUserMapstruct mapstruct;
+    private final SysRoleService sysRoleService;
 
     /**
      * 根据用户名查询用户
@@ -120,6 +125,8 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(UserSaveDTO dto) {
+        // 验证角色id是否存在
+        checkRoleIdExist(dto);
         SysUser entity = mapstruct.saveDTOToEntity(dto);
         baseMapper.insert(entity);
         if (CollectionUtil.isNotEmpty(dto.getRoles())) {
@@ -154,7 +161,27 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
         baseMapper.deleteUserRoleByUserId(entity.getId());
         // 保存新角色
         if (CollectionUtil.isNotEmpty(dto.getRoles())) {
+            // 验证角色id是否存在
+            checkRoleIdExist(dto);
             baseMapper.saveUserRole(entity.getId(), dto.getRoles().stream().map(RoleSmallDTO::getId).toList());
+        }
+    }
+
+    /**
+     * 检查传入的角色 ID 是否存在
+     *
+     * @param dto .
+     */
+    private void checkRoleIdExist(UserSaveDTO dto) {
+        List<String> roleIds = dto.getRoles().stream().map(RoleSmallDTO::getId).toList();
+        List<String> existRoleIds = sysRoleService.list().stream().map(SysRole::getId).toList();
+        // 检查传入的角色 ID 是否全部存在
+        Set<String> invalidRoleIds = roleIds.stream()
+                .filter(roleId -> !existRoleIds.contains(roleId))
+                .collect(Collectors.toSet());
+        if (!invalidRoleIds.isEmpty()) {
+            // 如果有无效的角色 ID，抛出异常或返回错误信息
+            throw new ServiceException("角色不存在", R.ROLE_NOT_FOUND);
         }
     }
 

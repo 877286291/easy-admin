@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.houyuji.common.base.R;
+import top.houyuji.common.base.exception.ServiceException;
 
 /**
  * 全局异常处理
@@ -29,7 +30,12 @@ public class GlobalExceptionHandler {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             if (fieldError != null) {
-                message = "参数" + fieldError.getField() + fieldError.getDefaultMessage();
+                String defaultMessage = fieldError.getDefaultMessage();
+                if (defaultMessage != null && defaultMessage.startsWith("Failed to convert property value")) {
+                    message = "参数" + fieldError.getField() + "类型错误";
+                } else {
+                    message = "参数" + fieldError.getField() + defaultMessage;
+                }
             }
         }
         return R.NG(message);
@@ -52,6 +58,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NotPermissionException.class)
     public R<Object> handleNotPermissionException(NotPermissionException e) {
         return R.NG(R.PERMISSION_DENIED, "无权限");
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = ServiceException.class)
+    public R<Object> handleSerialException(ServiceException e) {
+        return R.NG(e.getCode(), e.getMessage());
     }
 
     @ResponseBody

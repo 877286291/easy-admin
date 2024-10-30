@@ -1,6 +1,7 @@
 package top.houyuji.common.base.exception;
 
 import lombok.*;
+import top.houyuji.common.base.R;
 
 
 @Data
@@ -12,7 +13,7 @@ public class ServiceException extends RuntimeException {
      * 错误码
      */
     @Getter
-    private Integer code;
+    private Integer code = R.INTERNAL_SERVER_ERROR;
 
     /**
      * 错误提示

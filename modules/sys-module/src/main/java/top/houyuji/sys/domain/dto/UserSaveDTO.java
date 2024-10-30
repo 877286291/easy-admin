@@ -14,8 +14,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class UserSaveDTO extends UserDTO {
     /**
-     * 角色id
+     * 角色列表
      */
-    @Schema(description = "角色id")
+    @Schema(description = "角色列表")
     private List<RoleSmallDTO> roles;
 }

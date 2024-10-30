@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import top.houyuji.common.api.domain.BaseDTO;
+import top.houyuji.common.base.annotation.ValidNumber;
 import top.houyuji.common.base.enums.GenderEnums;
 import top.houyuji.common.base.enums.ValueEnum;
 
@@ -25,30 +26,30 @@ public class UserDTO extends BaseDTO {
     /**
      * 用户名
      */
-    @Schema(description = "用户名")
-    @NotBlank(message = "用户名不能为空")
+    @Schema(description = "用户名", example = "admin")
+    @NotBlank(message = "不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private String username;
     /**
      * 密码
      */
-    @Schema(description = "密码")
-    @NotBlank(message = "密码不能为空", groups = {addGroup.class})
+    @Schema(description = "密码", example = "123456")
+    @NotBlank(message = "不能为空", groups = {AddGroup.class})
     private String password;
     /**
      * 昵称
      */
-    @Schema(description = "昵称")
-    @NotBlank(message = "昵称不能为空")
+    @Schema(description = "昵称", example = "Aurora")
+    @NotBlank(message = "不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private String nickname;
     /**
      * 邮箱
      */
-    @Schema(description = "邮箱")
+    @Schema(description = "邮箱", example = "example@example.com")
     private String email;
     /**
      * 手机号
      */
-    @Schema(description = "手机号")
+    @Schema(description = "手机号", example = "13800000000")
     private String phone;
     /**
      * 头像
@@ -58,7 +59,8 @@ public class UserDTO extends BaseDTO {
     /**
      * 性别
      */
-    @Schema(description = "性别,0 保密,1 男,2 女")
+    @Schema(description = "性别,0 保密,1 男,2 女", example = "0")
+    @ValidNumber(values = {0, 1, 2}, groups = {AddGroup.class, UpdateGroup.class})
     private Integer gender;
     /**
      * 最后登录时间
@@ -89,6 +91,9 @@ public class UserDTO extends BaseDTO {
 
     }
 
-    public interface addGroup {
+    public interface AddGroup {
+    }
+
+    public interface UpdateGroup {
     }
 }

@@ -16,11 +16,14 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class UserRestPwdDTO implements Serializable {
     @Schema(description = "用户ID", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "用户ID不能为空")
+    @NotNull(message = "用户ID不能为空", groups = {RestPwdGroup.class})
     private String id;
     @Schema(description = "密码", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "密码不能为空")
+    @NotBlank(message = "密码不能为空", groups = {RestPwdGroup.class})
     private String password;
     @Schema(description = "操作人", hidden = true)
     private String operator;
+
+    public interface RestPwdGroup {
+    }
 }

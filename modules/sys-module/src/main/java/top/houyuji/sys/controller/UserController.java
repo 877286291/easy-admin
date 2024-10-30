@@ -4,9 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.houyuji.common.api.BaseQuery;
 import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.R;
 import top.houyuji.common.base.utils.CollectionUtil;
@@ -37,7 +38,7 @@ public class UserController {
      */
     @GetMapping
     @Operation(summary = "分页查询用户")
-    public R<JsfPage<UserDTO>> page(@Valid UserQuery query) {
+    public R<JsfPage<UserDTO>> page(@Validated({BaseQuery.PageGroup.class}) UserQuery query) {
         JsfPage<UserDTO> res = sysUserService.page(query);
         // 忽略密码
         List<UserDTO> records = res.getRecords();
@@ -55,7 +56,7 @@ public class UserController {
      */
     @GetMapping("/list")
     @Operation(summary = "查询用户列表")
-    public R<List<UserDTO>> list(@Valid UserQuery query) {
+    public R<List<UserDTO>> list(@Validated UserQuery query) {
         List<UserDTO> res = sysUserService.list(query);
         // 忽略密码
         res.forEach(UserDTO -> UserDTO.setPassword(null));
@@ -105,7 +106,7 @@ public class UserController {
      */
     @PostMapping
     @Operation(summary = "保存用户")
-    public R<String> save(@Valid @RequestBody UserSaveDTO dto) {
+    public R<String> save(@Validated({UserDTO.AddGroup.class}) @RequestBody UserSaveDTO dto) {
         dto.setPassword(PasswordUtil.encoder(dto.getPassword()));
         sysUserService.save(dto);
         return R.OK();
@@ -119,7 +120,7 @@ public class UserController {
      */
     @PutMapping
     @Operation(summary = "更新用户")
-    public R<String> update(@Valid @RequestBody UserSaveDTO dto) {
+    public R<String> update(@Validated({UserDTO.UpdateGroup.class}) @RequestBody UserSaveDTO dto) {
         dto.setPassword(null);
         sysUserService.updateById(dto);
         return R.OK();
@@ -149,7 +150,7 @@ public class UserController {
      */
     @PutMapping("/resetPassword")
     @Operation(summary = "重置密码")
-    public R<String> resetPassword(@Valid @RequestBody UserRestPwdDTO dto) {
+    public R<String> resetPassword(@Validated({UserRestPwdDTO.RestPwdGroup.class}) @RequestBody UserRestPwdDTO dto) {
         String password = dto.getPassword();
         String pwd = PasswordUtil.encoder(password);
         dto.setPassword(pwd);
