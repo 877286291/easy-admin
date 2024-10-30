@@ -37,7 +37,7 @@ public class UserController {
      */
     @GetMapping
     @Operation(summary = "分页查询用户")
-    public R<JsfPage<UserDTO>> page(UserQuery query) {
+    public R<JsfPage<UserDTO>> page(@Valid UserQuery query) {
         JsfPage<UserDTO> res = sysUserService.page(query);
         // 忽略密码
         List<UserDTO> records = res.getRecords();
@@ -55,7 +55,7 @@ public class UserController {
      */
     @GetMapping("/list")
     @Operation(summary = "查询用户列表")
-    public R<List<UserDTO>> list(UserQuery query) {
+    public R<List<UserDTO>> list(@Valid UserQuery query) {
         List<UserDTO> res = sysUserService.list(query);
         // 忽略密码
         res.forEach(UserDTO -> UserDTO.setPassword(null));
@@ -73,7 +73,7 @@ public class UserController {
     @Operation(summary = "用户名是否存在")
     @Parameters({
             @Parameter(name = "username", description = "用户名", required = true, example = "admin"),
-            @Parameter(name = "id", description = "需要排除的用户ID", required = false, example = "1")
+            @Parameter(name = "id", description = "需要排除的用户ID", example = "1")
     })
     public R<Boolean> existsByUsernameAndIdNot(@RequestParam("username") String username,
                                                @RequestParam(name = "id", required = false) String id) {

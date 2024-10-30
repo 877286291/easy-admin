@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             if (fieldError != null) {
-                message = "参数" + fieldError.getField() + "校验不通过";
+                message = "参数" + fieldError.getField() + fieldError.getDefaultMessage();
             }
         }
         return R.NG(message);

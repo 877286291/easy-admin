@@ -2,6 +2,7 @@ package top.houyuji.common.api;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,11 +23,13 @@ public class BaseQuery implements Serializable {
      * 分页size
      */
     @Schema(description = "分页size,只针对分页查询有效")
+    @Min(message = "最小值为0", value = 0)
     private int size;
     /**
      * 当前页码
      */
     @Schema(description = "当前页码,只针对分页查询有效")
+    @Min(message = "最小值为0", value = 0)
     private int current;
 
     /**

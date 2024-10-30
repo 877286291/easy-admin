@@ -9,9 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import top.houyuji.common.api.domain.BaseDTO;
 import top.houyuji.common.base.enums.GenderEnums;
 import top.houyuji.common.base.enums.ValueEnum;
-import top.houyuji.common.api.domain.BaseDTO;
 
 import java.util.Date;
 
@@ -31,7 +31,8 @@ public class UserDTO extends BaseDTO {
     /**
      * 密码
      */
-    @Schema(description = "密码,只有新增时需要传入")
+    @Schema(description = "密码")
+    @NotBlank(message = "密码不能为空", groups = {addGroup.class})
     private String password;
     /**
      * 昵称
@@ -86,5 +87,8 @@ public class UserDTO extends BaseDTO {
         GenderEnums valueEnum = ValueEnum.valueToEnum(GenderEnums.class, gender, GenderEnums.UNKNOWN);
         return valueEnum.getName();
 
+    }
+
+    public interface addGroup {
     }
 }
