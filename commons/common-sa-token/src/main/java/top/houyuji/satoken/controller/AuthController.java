@@ -1,9 +1,8 @@
 package top.houyuji.satoken.controller;
 
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.asymmetric.KeyType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -13,10 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.houyuji.common.base.R;
+import top.houyuji.common.base.core.UserInfo;
 import top.houyuji.common.base.utils.PasswordUtil;
 import top.houyuji.common.base.utils.StrUtil;
 import top.houyuji.common.cache.core.EasyAdminCache;
-import top.houyuji.satoken.config.SecurityProperties;
 import top.houyuji.satoken.controller.mapstruct.LoginInfoMapstruct;
 import top.houyuji.satoken.domain.LoginRequest;
 import top.houyuji.satoken.domain.dto.UserInfoDTO;
@@ -35,7 +34,6 @@ import java.util.Optional;
 @Tag(name = "系统：授权接口")
 @RequiredArgsConstructor
 public class AuthController {
-    private final SecurityProperties securityProperties;
     private final LoginInfoMapstruct loginInfoMapper;
     private final UserLoginService userLoginService;
     private final EasyAdminCache easyAdminCache;
@@ -68,10 +66,7 @@ public class AuthController {
     })
     public R<LoginInfoVo> loginByUsername(@Validated @RequestBody LoginRequest query) {
         // 公钥加密私钥解密
-        String password = SecureUtil.rsa(securityProperties.getLogin().getRsaPrivateKey(), securityProperties.getLogin().getRsaPublicKey()).decryptStr(
-                query.getPassword(),
-                KeyType.PrivateKey
-        );
+        String password = query.getPassword();
         Boolean isTenantLogin = query.getTenantLogin();
         String username = query.getUsername();
         UserInfoDTO user;
@@ -87,8 +82,10 @@ public class AuthController {
         }
         // 登录成功
         StpUtil.login(user.getId());
+        SaSession saSession = StpUtil.getSession();
+        saSession.set("userinfo", new UserInfo(user.getId(), user.getUsername(), user.getSysCode()));
         // redis保存用户信息
-        easyAdminCache.setObject("user:" + user.getId(), user);
+//        easyAdminCache.setObject("user:" + user.getId(), user);
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         String token = tokenInfo.getTokenValue();
         // 返回用户信息

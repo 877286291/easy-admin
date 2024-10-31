@@ -22,17 +22,17 @@ public class RoleDTO extends BaseEntity {
     /**
      * 角色名称
      */
-    @Schema(description = "角色名称")
+    @Schema(description = "角色名称", example = "test")
     private String name;
     /**
      * 角色标识
      */
-    @Schema(description = "角色标识")
+    @Schema(description = "角色标识", example = "test")
     private String code;
     /**
      * 描述
      */
-    @Schema(description = "描述")
+    @Schema(description = "描述", example = "这是一个测试角色")
     private String description;
     /**
      * 是否启用

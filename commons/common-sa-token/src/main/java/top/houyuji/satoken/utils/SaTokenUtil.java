@@ -2,8 +2,11 @@ package top.houyuji.satoken.utils;
 
 import cn.dev33.satoken.stp.StpUtil;
 import top.houyuji.common.base.AppUtil;
-import top.houyuji.common.cache.core.EasyAdminCache;
+import top.houyuji.common.base.core.UserInfo;
 import top.houyuji.satoken.domain.dto.UserInfoDTO;
+import top.houyuji.satoken.service.UserLoginService;
+
+import java.util.Optional;
 
 public class SaTokenUtil {
     /**
@@ -12,11 +15,17 @@ public class SaTokenUtil {
      * @return .
      */
     public static UserInfoDTO getCurrentUser() {
-        // 获取 Sa-Token 登入的用户 ID
-        String loginId = StpUtil.getLoginIdAsString();
-        // 获取登入的用户信息
-        EasyAdminCache easyAdminCache = AppUtil.getBean(EasyAdminCache.class);
-        return (UserInfoDTO) easyAdminCache.getObject("user:" + loginId);
+        UserLoginService userLoginService = AppUtil.getBean(UserLoginService.class);
+        UserInfo userinfo = (UserInfo) StpUtil.getSession().get("userinfo");
+        UserInfoDTO currentUser;
+        String username = userinfo.getUsername();
+        if (userinfo.getSysCode() != null) {
+            Optional<String> sysCode = userLoginService.getSysCodeByUsername(username);
+            currentUser = userLoginService.findByUsername(username, sysCode.orElse(null));
+        } else {
+            currentUser = userLoginService.findByUsername(username);
+        }
+        return currentUser;
     }
 
     /**

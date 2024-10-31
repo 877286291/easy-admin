@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.houyuji.common.api.BaseQuery;
 import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.R;
 import top.houyuji.sys.domain.dto.RoleDTO;
@@ -31,7 +33,7 @@ public class RoleController {
      */
     @GetMapping("/list")
     @Operation(summary = "列表查询")
-    public R<List<RoleDTO>> list(RoleQuery query) {
+    public R<List<RoleDTO>> list(@Validated RoleQuery query) {
         List<RoleDTO> res = sysRoleService.list(query);
         return R.OK(res);
     }
@@ -44,7 +46,7 @@ public class RoleController {
      */
     @GetMapping("/page")
     @Operation(summary = "分页查询")
-    public R<JsfPage<RoleDTO>> page(RoleQuery query) {
+    public R<JsfPage<RoleDTO>> page(@Validated({BaseQuery.PageGroup.class}) RoleQuery query) {
         JsfPage<RoleDTO> res = sysRoleService.page(query);
         return R.OK(res);
     }

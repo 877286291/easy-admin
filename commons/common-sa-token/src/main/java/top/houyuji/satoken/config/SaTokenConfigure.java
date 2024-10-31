@@ -10,8 +10,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.houyuji.common.base.core.UserContext;
 import top.houyuji.common.base.core.UserInfo;
-import top.houyuji.satoken.domain.dto.UserInfoDTO;
-import top.houyuji.satoken.utils.SaTokenUtil;
 
 @Slf4j
 @Configuration
@@ -22,13 +20,11 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new SaInterceptor(handle -> {
-            SaRouter.match("/**")
-                    .notMatch("/auth/login")
-                    .check(r -> {
-                        StpUtil.checkLogin();
-                        UserInfoDTO currentUser = SaTokenUtil.getCurrentUser();
-                        UserContext.set(new UserInfo(currentUser.getId(), currentUser.getUsername(), currentUser.getSysCode()));
-                    });
+            SaRouter.match("/**", "/auth/login", r -> {
+                StpUtil.checkLogin();
+                UserInfo userinfo = (UserInfo) StpUtil.getSession().get("userinfo");
+                UserContext.set(userinfo);
+            });
             SaRouter.match("/sys/**", r -> StpUtil.checkRole("admin"));
             // 用户管理
             SaRouter.match(SaHttpMethod.POST).match("/sys/user", r -> StpUtil.checkPermission("sys:user:add"));

@@ -2,6 +2,7 @@ package top.houyuji.handler;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -55,8 +56,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler(value = NotPermissionException.class)
-    public R<Object> handleNotPermissionException(NotPermissionException e) {
+    @ExceptionHandler(value = {NotPermissionException.class, NotRoleException.class})
+    public R<Object> handleNotPermissionException(Exception e) {
         return R.NG(R.PERMISSION_DENIED, "无权限");
     }
 
