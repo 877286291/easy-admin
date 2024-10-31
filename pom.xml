@@ -44,6 +44,7 @@
         <aliyun-sdk-oss.version>3.15.2</aliyun-sdk-oss.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <javax-activation.version>1.1.1</javax-activation.version>
+        <sa-token.version>1.39.0</sa-token.version>
     </properties>
     <dependencies>
         <dependency>
@@ -189,6 +190,17 @@
                 <artifactId>jaxb-runtime</artifactId>
                 <version>2.3.3</version>
             </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot3-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-redis</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
