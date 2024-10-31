@@ -4,21 +4,30 @@ import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import top.houyuji.common.base.core.UserContext;
+import top.houyuji.common.base.core.UserInfo;
+import top.houyuji.satoken.domain.dto.UserInfoDTO;
+import top.houyuji.satoken.utils.SaTokenUtil;
 
+@Slf4j
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
+
     // 注册拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         String apiVersion = "/api/v1";
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new SaInterceptor(handle -> {
-            SaRouter.match(apiVersion + "/**")
-                    .notMatch(apiVersion + "/auth/login")
-                    .check(r -> StpUtil.checkLogin());
+            SaRouter.match("/**", apiVersion + "/auth/login", r -> {
+                StpUtil.checkLogin();
+                UserInfoDTO currentUser = SaTokenUtil.getCurrentUser();
+                UserContext.set(new UserInfo(currentUser.getId(), currentUser.getUsername(), currentUser.getSysCode()));
+            });
             SaRouter.match(apiVersion + "/sys/**", r -> StpUtil.checkRole("admin"));
             // 用户管理
             SaRouter.match(SaHttpMethod.POST).match(apiVersion + "/sys/user", r -> StpUtil.checkPermission("sys:user:add"));
