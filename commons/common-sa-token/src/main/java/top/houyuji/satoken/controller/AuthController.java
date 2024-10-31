@@ -10,10 +10,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.houyuji.common.base.R;
+import top.houyuji.common.base.utils.PasswordUtil;
 import top.houyuji.common.base.utils.StrUtil;
 import top.houyuji.common.cache.core.EasyAdminCache;
 import top.houyuji.satoken.config.SecurityProperties;
@@ -81,9 +81,8 @@ public class AuthController {
         } else {
             user = userLoginService.findByUsername(username);
         }
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         // 验证密码
-        if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
+        if (!PasswordUtil.matches(password, user.getPassword())) {
             return R.NG("用户名或密码错误");
         }
         // 登录成功
