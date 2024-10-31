@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import top.houyuji.common.api.domain.BaseDTO;
+import top.houyuji.common.mybatis.core.domain.BaseEntity;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class BasUserSaveDTO extends BaseDTO {
+public class BasUserSaveDTO extends BaseEntity {
     @Schema(description = "用户id")
     private String id;
     @Schema(description = "用户名")

@@ -72,8 +72,6 @@ public class SysUser extends BaseEntity {
     /**
      * 是否系统用户
      */
-//    @TableField("`is_system`")
-//    private Boolean system = false;
     private Boolean isSystem = false;
     @TableField(exist = false)
     private Boolean system = isSystem;

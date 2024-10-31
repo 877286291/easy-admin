@@ -6,14 +6,14 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import top.houyuji.common.base.enums.MenuTypeEnums;
 import top.houyuji.common.base.utils.TreeUtil;
-import top.houyuji.common.api.domain.BaseDTO;
+import top.houyuji.common.mybatis.core.domain.BaseEntity;
 
 import java.util.List;
 
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PermissionDTO extends BaseDTO implements TreeUtil.Node<PermissionDTO, String> {
+public class PermissionDTO extends BaseEntity implements TreeUtil.Node<PermissionDTO, String> {
     @Schema(description = "id")
     private String id;
 

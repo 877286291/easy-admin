@@ -9,10 +9,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import top.houyuji.common.api.domain.BaseDTO;
 import top.houyuji.common.base.annotation.ValidNumber;
 import top.houyuji.common.base.enums.GenderEnums;
 import top.houyuji.common.base.enums.ValueEnum;
+import top.houyuji.common.mybatis.core.domain.BaseEntity;
 
 import java.util.Date;
 
@@ -20,7 +20,7 @@ import java.util.Date;
 @Setter
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserDTO extends BaseDTO {
+public class UserDTO extends BaseEntity {
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
     /**

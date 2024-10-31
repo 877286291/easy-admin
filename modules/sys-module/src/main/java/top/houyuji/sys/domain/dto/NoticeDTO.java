@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import top.houyuji.common.api.domain.BaseDTO;
+import top.houyuji.common.mybatis.core.domain.BaseEntity;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ import java.util.Date;
 @Setter
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class NoticeDTO extends BaseDTO {
+public class NoticeDTO extends BaseEntity {
     @Schema(description = "id")
     private String id;
     /**

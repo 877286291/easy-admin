@@ -6,13 +6,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import top.houyuji.common.api.domain.BaseDTO;
+import top.houyuji.common.mybatis.core.domain.BaseEntity;
 
 @Getter
 @Setter
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class PermissionSaveDTO extends BaseDTO {
+public class PermissionSaveDTO extends BaseEntity {
     @Schema(description = "id")
     private String id;
     /**

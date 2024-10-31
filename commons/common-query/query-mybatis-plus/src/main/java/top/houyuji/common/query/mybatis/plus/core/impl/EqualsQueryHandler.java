@@ -22,6 +22,8 @@ public class EqualsQueryHandler extends AbstractQueryHandler {
                 return;
             } else if (null == value) {
                 return;
+            } else if (value instanceof String && ((String) value).isEmpty()) {
+                return;
             }
         }
         queryWrapper.eq(column, value);

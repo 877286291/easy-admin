@@ -6,9 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import top.houyuji.common.api.domain.BaseDTO;
 import top.houyuji.common.base.enums.MenuTypeEnums;
 import top.houyuji.common.base.utils.TreeUtil;
+import top.houyuji.common.mybatis.core.domain.BaseEntity;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class BasPermissionDTO extends BaseDTO implements TreeUtil.Node<BasPermissionDTO, String> {
+public class BasPermissionDTO extends BaseEntity implements TreeUtil.Node<BasPermissionDTO, String> {
     @Schema(description = "权限ID")
     private String id;
     @Schema(description = "父类ID")
