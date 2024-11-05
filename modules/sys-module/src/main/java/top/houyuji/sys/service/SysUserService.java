@@ -1,5 +1,6 @@
 package top.houyuji.sys.service;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -188,10 +189,12 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
     /**
      * 删除
      *
-     * @param id id
+     * @param id 用户id
      */
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(String id) {
+        // 踢人下线
+        StpUtil.getTokenValueListByLoginId(id).forEach(StpUtil::kickoutByTokenValue);
         baseMapper.deleteById(id);
         // 删除用户角色
         baseMapper.deleteUserRoleByUserId(id);
