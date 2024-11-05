@@ -2,6 +2,7 @@ package top.houyuji.common.base.exception;
 
 import lombok.*;
 import top.houyuji.common.base.R;
+import top.houyuji.common.base.enums.ErrorCodeEnums;
 
 
 @Data
@@ -28,6 +29,11 @@ public class ServiceException extends RuntimeException {
 
     public ServiceException(String message) {
         this.message = message;
+    }
+
+    public ServiceException(ErrorCodeEnums enums) {
+        this.code = enums.getCode();
+        this.message = enums.getMessage();
     }
 
     public ServiceException(String message, Integer code) {

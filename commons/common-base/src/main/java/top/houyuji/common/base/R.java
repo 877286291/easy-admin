@@ -2,6 +2,7 @@ package top.houyuji.common.base;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import top.houyuji.common.base.enums.ErrorCodeEnums;
 
 import java.io.Serializable;
 
@@ -23,19 +24,6 @@ public class R<T> implements Serializable {
      * 默认失败状态码
      */
     public static final Integer SUC_1 = -1;
-    /**
-     * 用户未登录 1001
-     */
-    public static final Integer USER_NOT_LOGIN = 1001;
-    /**
-     * 访问权限不足 1002
-     */
-    public static final Integer PERMISSION_DENIED = 1002;
-
-    /**
-     * 角色不存在 1003
-     */
-    public static final Integer ROLE_NOT_FOUND = 1003;
 
     /**
      * 成功标志
@@ -175,6 +163,18 @@ public class R<T> implements Serializable {
      */
     public static <T> R<T> NG(String msg, T data) {
         return NG(INTERNAL_SERVER_ERROR, msg, data);
+    }
+
+    /**
+     * 接口返回数据:失败
+     *
+     * @param enums Response枚举
+     * @param data  数据
+     * @param <T>   数据类型
+     * @return 接口返回数据:失败
+     */
+    public static <T> R<T> NG(ErrorCodeEnums enums, T data) {
+        return NG(enums.getCode(), enums.getMessage(), data);
     }
 
     /**

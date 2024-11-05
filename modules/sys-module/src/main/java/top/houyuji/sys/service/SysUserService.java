@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.houyuji.common.api.JsfPage;
-import top.houyuji.common.base.R;
 import top.houyuji.common.base.exception.ServiceException;
 import top.houyuji.common.base.utils.CollectionUtil;
 import top.houyuji.common.base.utils.StrUtil;
@@ -29,6 +28,8 @@ import top.houyuji.sys.service.mapstruct.SysUserMapstruct;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static top.houyuji.common.base.enums.ErrorCodeEnums.*;
 
 
 @Service
@@ -144,11 +145,11 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
     public void updateById(UserSaveDTO dto) {
         SysUser sysUser = mapstruct.saveDTOToEntity(dto);
         if (StrUtil.isBlank(sysUser.getId())) {
-            throw new ServiceException("id不能为空");
+            throw new ServiceException(USER_ID_REQUIRED);
         }
         SysUser entity = getById(sysUser.getId());
         if (entity == null) {
-            throw new ServiceException("数据不存在");
+            throw new ServiceException(RECORD_NOT_FOUND);
         }
 
         // 账号不能修改，密码单独修改
@@ -182,7 +183,7 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
                 .collect(Collectors.toSet());
         if (!invalidRoleIds.isEmpty()) {
             // 如果有无效的角色 ID，抛出异常或返回错误信息
-            throw new ServiceException("角色不存在", R.ROLE_NOT_FOUND);
+            throw new ServiceException(ROLE_NOT_FOUND);
         }
     }
 
@@ -209,12 +210,6 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void resetPassword(UserRestPwdDTO dto) {
-        if (dto.getId() == null) {
-            throw new ServiceException("id不能为空");
-        }
-        if (StrUtil.isBlank(dto.getPassword())) {
-            throw new ServiceException("密码不能为空");
-        }
         changePassword(dto.getId(), dto.getPassword());
     }
 
@@ -228,11 +223,9 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
     public void changePassword(String id, String password) {
         SysUser entity = getById(id);
         if (entity == null) {
-            throw new ServiceException("数据不存在");
+            throw new ServiceException(RECORD_NOT_FOUND);
         }
         entity.setPassword(password);
         baseMapper.updateById(entity);
     }
-
-
 }

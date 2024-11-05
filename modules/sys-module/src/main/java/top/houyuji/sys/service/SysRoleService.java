@@ -22,6 +22,8 @@ import top.houyuji.sys.service.mapstruct.SysRoleMapstruct;
 
 import java.util.List;
 
+import static top.houyuji.common.base.enums.ErrorCodeEnums.*;
+
 
 @Service
 @Slf4j
@@ -89,7 +91,7 @@ public class SysRoleService extends BaseService<SysRoleMapper, SysRole> {
         SysRole entity = mapstruct.toEntity(dto);
         Boolean res = existsCode(entity.getCode(), entity.getId());
         if (res) {
-            throw new ServiceException("编码已存在");
+            throw new ServiceException(ROLE_CODE_EXISTS);
         }
         save(entity);
     }
@@ -105,7 +107,7 @@ public class SysRoleService extends BaseService<SysRoleMapper, SysRole> {
         role.setCode(null);
         SysRole entity = getById(role.getId());
         if (entity == null) {
-            throw new ServiceException("未找到对应实体");
+            throw new ServiceException(RECORD_NOT_FOUND);
         }
         BeanUtil.copyProperties(role, entity, CopyOptions.create().setIgnoreNullValue(true));
         updateById(entity);
@@ -121,7 +123,7 @@ public class SysRoleService extends BaseService<SysRoleMapper, SysRole> {
         // 是否有用户关联
         boolean exists = baseMapper.existsUserByRoleId(id);
         if (exists) {
-            throw new ServiceException("有用户关联，无法删除");
+            throw new ServiceException(ROLE_IS_BINDING);
         }
         removeById(id);
         // 删除角色菜单

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import top.houyuji.common.base.R;
 import top.houyuji.common.base.exception.ServiceException;
 
+import static top.houyuji.common.base.enums.ErrorCodeEnums.PERMISSION_DENIED;
+import static top.houyuji.common.base.enums.ErrorCodeEnums.USER_NOT_LOGIN;
+
 /**
  * 全局异常处理
  * Created by Aurora on 2020/2/27.
@@ -52,13 +55,13 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = NotLoginException.class)
     public R<Object> handleNotLoginException(NotLoginException e) {
-        return R.NG(R.USER_NOT_LOGIN, "用户未登录");
+        return R.NG(USER_NOT_LOGIN, null);
     }
 
     @ResponseBody
     @ExceptionHandler(value = {NotPermissionException.class, NotRoleException.class})
     public R<Object> handleNotPermissionException(Exception e) {
-        return R.NG(R.PERMISSION_DENIED, "无权限");
+        return R.NG(PERMISSION_DENIED, null);
     }
 
     @ResponseBody
