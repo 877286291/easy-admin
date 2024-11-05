@@ -118,9 +118,10 @@ public class UserController {
      * @param dto 用户信息
      * @return 是否成功
      */
-    @PutMapping
+    @PutMapping("/{userId}")
     @Operation(summary = "更新用户")
-    public R<String> update(@Validated({UserDTO.UpdateGroup.class}) @RequestBody UserSaveDTO dto) {
+    public R<String> update(@PathVariable String userId, @RequestBody @Validated({UserDTO.UpdateGroup.class}) UserSaveDTO dto) {
+        dto.setId(userId);
         dto.setPassword(null);
         sysUserService.updateById(dto);
         return R.OK();
@@ -129,16 +130,13 @@ public class UserController {
     /**
      * 删除用户
      *
-     * @param id 用户ID
+     * @param userId 用户ID
      * @return 是否成功
      */
-    @DeleteMapping
+    @DeleteMapping("/{userId}")
     @Operation(summary = "删除用户")
-    @Parameters({
-            @Parameter(name = "id", description = "用户ID", required = true, example = "1")
-    })
-    public R<String> delete(@RequestParam("id") String id) {
-        sysUserService.deleteById(id);
+    public R<String> delete(@PathVariable String userId) {
+        sysUserService.deleteById(userId);
         return R.OK();
     }
 

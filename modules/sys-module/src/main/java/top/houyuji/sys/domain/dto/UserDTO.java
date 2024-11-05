@@ -72,6 +72,7 @@ public class UserDTO extends BaseEntity {
      * 最近修改密码时间
      */
     @Schema(description = "最近修改密码时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date pwdResetTime;
     /**
      * 是否系统用户

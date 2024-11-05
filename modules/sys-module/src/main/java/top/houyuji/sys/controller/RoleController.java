@@ -3,7 +3,7 @@ package top.houyuji.sys.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -79,7 +79,7 @@ public class RoleController {
      */
     @PostMapping
     @Operation(summary = "添加")
-    public R<String> save(@Valid @RequestBody RoleDTO RoleDTO) {
+    public R<String> save(@Validated @RequestBody RoleDTO RoleDTO) {
         sysRoleService.save(RoleDTO);
         return R.OK();
     }
@@ -124,7 +124,7 @@ public class RoleController {
      */
     @GetMapping("/permission")
     @Operation(summary = "查询角色权限")
-    public R<List<String>> getPermissionIds(@RequestParam(name = "roleId") String roleId) {
+    public R<List<String>> getPermissionIds(@RequestParam @NotBlank(message = "不能为空") String roleId) {
         List<String> res = sysRoleService.getPermissionIds(roleId);
         return R.OK(res);
     }
@@ -136,13 +136,10 @@ public class RoleController {
      * @param menuIds 菜单id
      * @return 是否成功
      */
-    @PutMapping("/assignPermission")
+    @PutMapping("/assignPermission/{roleId}")
     @Operation(summary = "分配权限")
-    @Parameters({
-            @io.swagger.v3.oas.annotations.Parameter(name = "roleId", description = "角色id", required = true),
-    })
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "菜单与权限ID", required = true)
-    public R<String> assignPermission(@RequestParam(name = "roleId") String roleId,
+    public R<String> assignPermission(@PathVariable @NotBlank(message = "不能为空") String roleId,
                                       @RequestBody List<String> menuIds) {
         sysRoleService.assign(roleId, menuIds);
         return R.OK();
