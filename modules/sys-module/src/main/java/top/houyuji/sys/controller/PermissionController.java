@@ -33,8 +33,8 @@ public class PermissionController {
      * @return .
      */
     @GetMapping
-    @Operation(summary = "查询", description = "默认查询root节点，rank排序")
-    public R<List<PermissionDTO>> list(PermissionQuery query) {
+    @Operation(summary = "列表查询", description = "默认查询root节点，rank排序")
+    public R<List<PermissionDTO>> list(@Validated PermissionQuery query) {
         List<PermissionDTO> res = sysPermissionService.list(query);
         return R.OK(res);
     }
