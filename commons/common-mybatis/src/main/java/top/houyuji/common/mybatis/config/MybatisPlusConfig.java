@@ -1,14 +1,11 @@
 package top.houyuji.common.mybatis.config;
 
-import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import top.houyuji.common.mybatis.handler.InjectionMetaObjectHandler;
+import org.springframework.context.annotation.Configuration;
 
-@AutoConfiguration(before = {MybatisPlusAutoConfiguration.class})
+@Configuration
 public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -27,10 +24,5 @@ public class MybatisPlusConfig {
         // 分页合理化
         interceptor.setOverflow(true);
         return interceptor;
-    }
-
-    @Bean
-    public MetaObjectHandler metaObjectHandler() {
-        return new InjectionMetaObjectHandler();
     }
 }

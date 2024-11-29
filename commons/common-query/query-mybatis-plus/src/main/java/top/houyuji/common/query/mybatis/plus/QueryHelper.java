@@ -11,10 +11,9 @@ import top.houyuji.common.api.BaseQuery;
 import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.exception.QueryException;
 import top.houyuji.common.base.utils.CollectionUtil;
-import top.houyuji.common.query.mybatis.plus.core.impl.*;
 import top.houyuji.common.query.mybatis.plus.bean.Pair;
 import top.houyuji.common.query.mybatis.plus.core.AbstractQueryHandler;
-import top.houyuji.common.query.mybatis.plus.core.impl.EqualsQueryHandler;
+import top.houyuji.common.query.mybatis.plus.core.impl.*;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
@@ -62,9 +61,6 @@ public class QueryHelper {
         Field[] fields = ReflectUtil.getFields(bean.getClass());
         for (Field field : fields) {
             Annotation[] annotations = field.getAnnotations();
-            if (null == annotations) {
-                continue;
-            }
             for (Annotation annotation : annotations) {
                 AbstractQueryHandler queryHandler = QUERY_HANDLER_MAP.get(annotation.annotationType());
                 if (null != queryHandler) {
@@ -187,7 +183,7 @@ public class QueryHelper {
      * @return IPage
      */
     public static <T, E extends BaseQuery> IPage<T> toPage(E query) {
-        Page<T> page = new Page<>(query.getCurrent(), query.getSize());
+        Page<T> page = new Page<>(query.getCurrent(), query.getSize(), true);
         List<BaseQuery.SortMate> sorts = query.getSorts();
         if (CollectionUtil.isNotEmpty(sorts)) {
             for (BaseQuery.SortMate sort : sorts) {

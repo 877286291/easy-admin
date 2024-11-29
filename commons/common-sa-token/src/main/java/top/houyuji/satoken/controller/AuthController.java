@@ -84,8 +84,6 @@ public class AuthController {
         StpUtil.login(user.getId());
         SaSession saSession = StpUtil.getSession();
         saSession.set("userinfo", new UserInfo(user.getId(), user.getUsername(), user.getSysCode()));
-        // redis保存用户信息
-//        easyAdminCache.setObject("user:" + user.getId(), user);
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         String token = tokenInfo.getTokenValue();
         // 返回用户信息
