@@ -15,6 +15,8 @@ import java.io.Serializable;
 public class RoleSmallDTO implements Serializable {
     @Schema(description = "角色ID")
     private String id;
+    @Schema(description = "角色代码")
+    private String code;
     @Schema(description = "角色名称")
     private String name;
 }

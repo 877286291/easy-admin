@@ -35,7 +35,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param userId 用户id
      * @return 角色
      */
-    @Select("select r.id,r.name from sys_role r " +
+    @Select("select r.id,r.code,r.name from sys_role r " +
             "left join sys_user_role ur on r.id = ur.role_id " +
             "where ur.user_id = #{userId}")
     List<RoleSmallDTO> getRolesByUserId(String userId);

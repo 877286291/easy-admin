@@ -17,6 +17,7 @@ import top.houyuji.sys.domain.dto.RoleSmallDTO;
 import top.houyuji.sys.domain.dto.UserDTO;
 import top.houyuji.sys.domain.dto.UserRestPwdDTO;
 import top.houyuji.sys.domain.dto.UserSaveDTO;
+import top.houyuji.sys.domain.entity.SysUser;
 import top.houyuji.sys.domain.query.UserQuery;
 import top.houyuji.sys.service.SysUserService;
 
@@ -137,6 +138,24 @@ public class UserController {
     @Operation(summary = "删除用户")
     public R<String> delete(@PathVariable String userId) {
         sysUserService.deleteById(userId);
+        return R.OK();
+    }
+
+    /**
+     * 更新用户状态
+     *
+     * @param userId 用户ID
+     * @param status 状态
+     */
+    @PatchMapping("/{userId}/status/{status}")
+    @Operation(summary = "更新用户状态")
+    public R<String> updateStatus(@PathVariable String userId, @PathVariable Boolean status) {
+        SysUser sysUser = sysUserService.getById(userId);
+        if (sysUser == null) {
+            return R.NG("用户不存在");
+        }
+        sysUser.setEnabled(status);
+        sysUserService.updateById(sysUser);
         return R.OK();
     }
 
