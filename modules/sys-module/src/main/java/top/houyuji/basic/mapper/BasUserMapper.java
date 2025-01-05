@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
 import top.houyuji.basic.domain.dto.BasUserDTO;
 import top.houyuji.basic.domain.entity.BasUser;
 import top.houyuji.basic.domain.entity.BasUserRole;

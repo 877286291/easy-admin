@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
 import top.houyuji.sys.domain.dto.TenantDTO;
 import top.houyuji.sys.domain.entity.SysTenant;
 import top.houyuji.sys.domain.query.TenantQuery;

@@ -76,6 +76,7 @@ public abstract class AbstractTemplateEngine {
         data.put("author", globalConfig.getAuthor());
         data.put("date", globalConfig.getCommentDate());
         data.put("springdoc", globalConfig.isSpringdoc());
+        data.put("entityLombokModel", globalConfig.isEntityLombokModel());
         data.put("package", packageConfig.getPackageInfo());
         data.put("table", tableInfo);
         return data;
@@ -107,7 +108,7 @@ public abstract class AbstractTemplateEngine {
             repositoryOutput.outputFile(tableInfo, templateData);
             //service
             serviceOutput.outputFile(tableInfo, templateData);
-            //serviceimpl
+            //serviceImpl
             serviceImplOutput.outputFile(tableInfo, templateData);
             //controller
             controllerOutput.outputFile(tableInfo, templateData);

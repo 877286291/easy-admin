@@ -42,7 +42,7 @@ public interface ConstVal {
 
 
     /*super class*/
-    String SUPER_ENTITY_CLASS = "top.houyuji.domain.BaseEntity";
+    String SUPER_ENTITY_CLASS = "top.houyuji.common.mybatis.core.domain";
     String SUPER_REPOSITORY_CLASS = "top.houyuji.repository.BaseJpaRepository";
     String ID_TYPE = "top.houyuji.data.core.identifier.IdGenerator";
     String SUPER_SERVICE_IMPL_CLASS = "top.houyuji.data.core.service.BaseService";

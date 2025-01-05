@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerIntercept
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import top.houyuji.common.mybatis.tenant.handler.PlusTenantLineHandler;
 import top.houyuji.common.mybatis.config.MybatisPlusConfig;
+import top.houyuji.common.mybatis.tenant.handler.PlusTenantLineHandler;
 
 import java.util.List;
 

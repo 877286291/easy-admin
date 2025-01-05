@@ -28,6 +28,11 @@ public class GlobalConfig {
      */
     private boolean springdoc = true;
 
+    /**
+     * 是否使用lombok
+     */
+    private boolean entityLombokModel = true;
+
     public String getCommentDate() {
         return commentDate.get();
     }
@@ -105,6 +110,22 @@ public class GlobalConfig {
          */
         public Builder springdoc(boolean springdoc) {
             globalConfig.springdoc = springdoc;
+            return this;
+        }
+
+        /**
+         * 是否使用lombok
+         */
+        public Builder entityLombokModel() {
+            globalConfig.entityLombokModel = true;
+            return this;
+        }
+
+        /**
+         * 是否使用lombok
+         */
+        public Builder entityLombokModel(boolean entityLombokModel) {
+            globalConfig.entityLombokModel = entityLombokModel;
             return this;
         }
 
