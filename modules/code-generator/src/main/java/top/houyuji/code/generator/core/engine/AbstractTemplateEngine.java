@@ -67,8 +67,8 @@ public abstract class AbstractTemplateEngine {
         data.putAll(strategyConfig.getEntityStrategy().renderData(tableInfo));
         data.putAll(strategyConfig.getControllerStrategy().renderData(tableInfo));
         data.putAll(strategyConfig.getServiceStrategy().renderData(tableInfo));
-        data.putAll(strategyConfig.getServiceImplStrategy().renderData(tableInfo));
-        data.putAll(strategyConfig.getRepositoryStrategy().renderData(tableInfo));
+        data.putAll(strategyConfig.getMapperStrategy().renderData(tableInfo));
+        data.putAll(strategyConfig.getMapperXmlStrategy().renderData(tableInfo));
         data.putAll(strategyConfig.getDtoStrategy().renderData(tableInfo));
         data.putAll(strategyConfig.getQueryStrategy().renderData(tableInfo));
 
@@ -91,9 +91,9 @@ public abstract class AbstractTemplateEngine {
         EntityOutput entityOutput = new EntityOutput(this);
         DtoOutput dtoOutput = new DtoOutput(this);
         QueryOutput queryOutput = new QueryOutput(this);
-        RepositoryOutput repositoryOutput = new RepositoryOutput(this);
+        MapperOutput mapperOutput = new MapperOutput(this);
+        MapperXmlOutput mapperXmlOutput = new MapperXmlOutput(this);
         ServiceOutput serviceOutput = new ServiceOutput(this);
-        ServiceImplOutput serviceImplOutput = new ServiceImplOutput(this);
         ControllerOutput controllerOutput = new ControllerOutput(this);
         // 循环生成文件
         for (TableInfo tableInfo : tables) {
@@ -104,12 +104,12 @@ public abstract class AbstractTemplateEngine {
             dtoOutput.outputFile(tableInfo, templateData);
             //query
             queryOutput.outputFile(tableInfo, templateData);
-            //repository
-            repositoryOutput.outputFile(tableInfo, templateData);
+            //mapper java
+            mapperOutput.outputFile(tableInfo, templateData);
+            //mapper xml
+            mapperXmlOutput.outputFile(tableInfo, templateData);
             //service
             serviceOutput.outputFile(tableInfo, templateData);
-            //serviceImpl
-            serviceImplOutput.outputFile(tableInfo, templateData);
             //controller
             controllerOutput.outputFile(tableInfo, templateData);
 

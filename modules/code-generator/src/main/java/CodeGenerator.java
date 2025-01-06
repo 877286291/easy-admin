@@ -15,44 +15,46 @@ import top.houyuji.code.generator.core.po.TableInfo;
 import top.houyuji.code.generator.jdbc.DatabaseMetaDataWrapper;
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class CodeGenerator {
     public static void main(String[] args) {
+        String moduleName = scanner("模块名");
+        String[] tableNames = scanner("表名，多个英文逗号分割").split(",");
+        List<String> tableNameList = Arrays.asList(tableNames); // Convert array to list
         DataSourceConfig dataSourceConfig = getDataSourceConfig();
         Connection conn = dataSourceConfig.getConn();
         GlobalConfig globalConfig = getGlobalConfig();
         StrategyConfig strategyConfig = getStrategyConfig();
-        PackageConfig packageConfig = getPackageConfig();
+        PackageConfig packageConfig = getPackageConfig(moduleName);
         ConfigBuilder configBuilder = new ConfigBuilder(strategyConfig, globalConfig, packageConfig);
         FreemarkerTemplateEngine templateEngine = new FreemarkerTemplateEngine();
         List<TableInfo> tableInfos = new ArrayList<>();
-        DatabaseMetaDataWrapper databaseMetaDataWrapper = getDatabaseMetaDataWrapper(conn, configBuilder, tableInfos);
+        DatabaseMetaDataWrapper databaseMetaDataWrapper = getDatabaseMetaDataWrapper(conn, configBuilder, tableInfos, tableNameList);
         AutoGenerator autoGenerator = new AutoGenerator().configBuilder(configBuilder);
         autoGenerator.execute(tableInfos, templateEngine);
         databaseMetaDataWrapper.closeConnection();
     }
 
-    private static DatabaseMetaDataWrapper getDatabaseMetaDataWrapper(Connection conn, ConfigBuilder configBuilder, List<TableInfo> tableInfos) {
+    private static DatabaseMetaDataWrapper getDatabaseMetaDataWrapper(Connection conn, ConfigBuilder configBuilder, List<TableInfo> tableInfos, List<String> tableNameList) {
         DatabaseMetaDataWrapper databaseMetaDataWrapper = new DatabaseMetaDataWrapper(conn, "");
         List<DatabaseMetaDataWrapper.Table> tables = databaseMetaDataWrapper.getTables();
         tables.forEach(table -> {
             String tableName = table.getName();
-            TableInfo tableInfo = new TableInfo(configBuilder, tableName);
-            Map<String, DatabaseMetaDataWrapper.Column> columnInfo = databaseMetaDataWrapper.getColumnInfo(tableName);
-            columnInfo.forEach((columnName, column) -> {
-                TableField tableField = new TableField(configBuilder, columnName);
-                tableField.setType(column.getType());
-                tableField.setPk(column.isPrimaryKey());
-                tableField.setRequired(!column.isNullable());
-                tableField.setComment(column.getComment());
-                tableInfo.addField(tableField);
-            });
-            tableInfo.processTable();
-            tableInfos.add(tableInfo);
+            if (tableNameList.contains(tableName)) {
+                TableInfo tableInfo = new TableInfo(configBuilder, tableName);
+                Map<String, DatabaseMetaDataWrapper.Column> columnInfo = databaseMetaDataWrapper.getColumnInfo(tableName);
+                columnInfo.forEach((columnName, column) -> {
+                    TableField tableField = new TableField(configBuilder, columnName);
+                    tableField.setType(column.getType());
+                    tableField.setPk(column.isPrimaryKey());
+                    tableField.setRequired(!column.isNullable());
+                    tableField.setComment(column.getComment());
+                    tableInfo.addField(tableField);
+                });
+                tableInfo.processTable();
+                tableInfos.add(tableInfo);
+            }
         });
         return databaseMetaDataWrapper;
     }
@@ -69,8 +71,8 @@ public class CodeGenerator {
                 .build();
     }
 
-    private static PackageConfig getPackageConfig() {
-        return new PackageConfig.Builder().build();
+    private static PackageConfig getPackageConfig(String moduleName) {
+        return new PackageConfig.Builder().moduleName(moduleName).build();
     }
 
     private static GlobalConfig getGlobalConfig() {
@@ -92,12 +94,9 @@ public class CodeGenerator {
                 .columnTypeConvertHandler(new MysqlColumnTypeConvert()) // 数据库类型转换
                 .controllerStrategyBuilder() // controller策略
                 .enableFileOverride() // 是否覆盖文件
-                .repositoryStrategyBuilder() // repository策略
-                .enableFileOverride() // 是否覆盖文件
+                .mapperStrategyBuilder() // mapper策略
+                .mapperXmlStrategyBuilder() // mapper xml策略
                 .serviceStrategyBuilder() // service策略
-                .enableFileOverride() // 是否覆盖文件
-                .disableGenerate() // 是否生成
-                .serviceImplStrategyBuilder() // impl策略
                 .enableFileOverride() // 是否覆盖文件
                 .dtoStrategyBuilder() // dto策略
                 .enableFileOverride() // 是否覆盖文件

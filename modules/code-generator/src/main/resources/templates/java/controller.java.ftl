@@ -1,32 +1,36 @@
 package ${package.Controller};
 
 import org.springframework.web.bind.annotation.RequestMapping;
-<#if restControllerStyle>
 import org.springframework.web.bind.annotation.RestController;
-<#else>
-import org.springframework.stereotype.Controller;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import top.houyuji.common.api.JsfPage;
+import top.houyuji.common.base.R;
+<#if swagger??>
+import io.swagger.v3.oas.annotations.tags.Tag;
 </#if>
+
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
 </#if>
 
 /**
+<#if table.comment!?length gt 0>
  * <p>
- * ${table.comment!} 前端控制器
+ * ${table.comment!} api接口
  * </p>
  *
+</#if>
  * @author ${author}
  * @since ${date}
  */
-<#if restControllerStyle>
+@Slf4j
 @RestController
-<#else>
-@Controller
+@RequestMapping("<#if package.ModuleName?? && package.ModuleName != "">/${package.ModuleName}</#if>/${entityPath}")
+<#if swagger??>
+@Tag(name = "")
 </#if>
-@RequestMapping("<#if package.ModuleName?? && package.ModuleName != "">/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
-<#if kotlin>
-class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
-<#else>
+@RequiredArgsConstructor
 <#if superControllerClass??>
 public class ${table.controllerName} extends ${superControllerClass} {
 <#else>
@@ -34,4 +38,3 @@ public class ${table.controllerName} {
 </#if>
 
 }
-</#if>

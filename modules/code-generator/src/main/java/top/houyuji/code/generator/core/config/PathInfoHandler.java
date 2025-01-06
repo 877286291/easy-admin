@@ -3,8 +3,8 @@ package top.houyuji.code.generator.core.config;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import top.houyuji.code.generator.core.config.strategy.EntityStrategy;
-import top.houyuji.code.generator.core.config.strategy.RepositoryStrategy;
-import top.houyuji.code.generator.core.config.strategy.ServiceImplStrategy;
+import top.houyuji.code.generator.core.config.strategy.MapperStrategy;
+import top.houyuji.code.generator.core.config.strategy.MapperXmlStrategy;
 import top.houyuji.code.generator.core.config.strategy.ServiceStrategy;
 import top.houyuji.code.generator.core.enums.ConstVal;
 import top.houyuji.code.generator.core.enums.OutputFile;
@@ -52,16 +52,17 @@ public class PathInfoHandler {
         // query
         putPathInfo(strategyConfig.getQueryStrategy().getJavaTemplate(), OutputFile.query, ConstVal.PACKAGE_QUERY);
 
-        //repository
-        RepositoryStrategy repositoryStrategy = strategyConfig.getRepositoryStrategy();
-        putPathInfo(repositoryStrategy.getJavaTemplate(), OutputFile.repository, ConstVal.PACKAGE_REPOSITORY);
+        //mapper
+        MapperStrategy mapperStrategy = strategyConfig.getMapperStrategy();
+        putPathInfo(mapperStrategy.getJavaTemplate(), OutputFile.mapper, ConstVal.PACKAGE_MAPPER);
+
+        //mapper xml
+        MapperXmlStrategy mapperXmlStrategy = strategyConfig.getMapperXmlStrategy();
+        putPathInfo(mapperXmlStrategy.getJavaTemplate(), OutputFile.xml, ConstVal.PACKAGE_MAPPER);
 
         //service
         ServiceStrategy serviceStrategy = strategyConfig.getServiceStrategy();
         putPathInfo(serviceStrategy.getJavaTemplate(), OutputFile.service, ConstVal.PACKAGE_SERVICE);
-        //serviceImpl
-        ServiceImplStrategy serviceImplStrategy = strategyConfig.getServiceImplStrategy();
-        putPathInfo(serviceImplStrategy.getJavaTemplate(), OutputFile.serviceImpl, ConstVal.PACKAGE_SERVICE_IMPL);
 
         //controller
         putPathInfo(strategyConfig.getControllerStrategy().getJavaTemplate(), OutputFile.controller, ConstVal.PACKAGE_CONTROLLER);

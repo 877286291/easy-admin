@@ -10,7 +10,7 @@ public interface ConstVal {
     String PACKAGE_DTO = "Dto";
     String PACKAGE_VO = "Vo";
     String PACKAGE_QUERY = "Query";
-    String PACKAGE_REPOSITORY = "Repository";
+    String PACKAGE_MAPPER = "Mapper";
     String PACKAGE_SERVICE = "Service";
     String PACKAGE_SERVICE_IMPL = "ServiceImpl";
     String PACKAGE_CONTROLLER = "Controller";
@@ -23,29 +23,27 @@ public interface ConstVal {
     String DTO_TEMPLATE = "/templates/java/dto.java";
     String VO_TEMPLATE = "/templates/java/vo.java";
     String QUERY_TEMPLATE = "/templates/java/query.java";
-    String REPOSITORY_TEMPLATE = "/templates/java/repository.java";
+    String MAPPER_TEMPLATE = "/templates/java/mapper.java";
+    String MAPPER_XML_TEMPLATE = "/templates/java/mapper.xml";
     String SERVICE_TEMPLATE = "/templates/java/service.java";
-    String SERVICE_IMPL_TEMPLATE = "/templates/java/serviceImpl.java";
     String CONTROLLER_TEMPLATE = "/templates/java/controller.java";
 
 
     /*file name*/
     String Entity = "Entity";
-    String DTO = "Dto";
-    String VO = "Vo";
+    String DTO = "DTO";
+    String VO = "VO";
     String QUERY = "Query";
-    String REPOSITORY = "Repository";
+    String MAPPER = "Mapper";
     String SERVICE = "Service";
-    String SERVICE_IMPL = "ServiceImpl";
     String CONTROLLER = "Controller";
     String PARENT = "Parent";
 
 
     /*super class*/
-    String SUPER_ENTITY_CLASS = "top.houyuji.common.mybatis.core.domain";
-    String SUPER_REPOSITORY_CLASS = "top.houyuji.repository.BaseJpaRepository";
+    String SUPER_ENTITY_CLASS = "top.houyuji.common.mybatis.tenant.core.BaseTenantEntity";
+    String SUPER_MAPPER_CLASS = "top.houyuji.common.mybatis.core.mapper.BaseMapper";
     String ID_TYPE = "top.houyuji.data.core.identifier.IdGenerator";
-    String SUPER_SERVICE_IMPL_CLASS = "top.houyuji.data.core.service.BaseService";
-    String SUPER_DTO_CLASS = "top.houyuji.common.api.domain.BaseTenantDto";
+    String SUPER_DTO_CLASS = "top.houyuji.common.mybatis.tenant.core.BaseTenantDTO";
     String SUPER_QUERY_CLASS = "top.houyuji.common.api.BaseQuery";
 }

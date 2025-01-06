@@ -18,10 +18,12 @@ import lombok.experimental.Accessors;
 </#if>
 
 /**
+ <#if table.comment!?length gt 0>
  * <p>
  * ${table.comment!}
  * </p>
  *
+</#if>
  * @author ${author}
  * @since ${date}
  */
@@ -32,22 +34,22 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
     </#if>
 </#if>
-<#if table.convert>
+<#if table.convert??>
 @TableName("${schemaName}${table.name}")
 </#if>
 <#if springdoc>
-@Schema(name = "${entity}", description = "${table.comment!}")
+@Schema(name = "${table.entityName}", description = "${table.comment!}")
 <#elseif swagger>
-@ApiModel(value = "${entity}对象", description = "${table.comment!}")
+@ApiModel(value = "${table.entityName}对象", description = "${table.comment!}")
 </#if>
 <#if superEntityClass??>
-public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
+public class ${table.entityName} extends ${superEntityClass}<#if activeRecord??><${table.entityName}></#if> {
 <#elseif activeRecord>
-public class ${entity} extends Model<${entity}> {
+public class ${table.entityName} extends Model<${table.entityName}> {
 <#elseif entitySerialVersionUID>
-public class ${entity} implements Serializable {
+public class ${table.entityName} implements Serializable {
 <#else>
-public class ${entity} {
+public class ${table.entityName} {
 </#if>
 <#if entitySerialVersionUID>
 
@@ -55,7 +57,7 @@ public class ${entity} {
 </#if>
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
-    <#if field.keyFlag>
+    <#if field.keyFlag??>
         <#assign keyPropertyName="${field.propertyName}"/>
     </#if>
 
@@ -70,7 +72,7 @@ public class ${entity} {
      */
         </#if>
     </#if>
-    <#if field.keyFlag>
+    <#if field.keyFlag??>
         <#-- 主键 -->
         <#if field.keyIdentityFlag>
     @TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
@@ -87,21 +89,21 @@ public class ${entity} {
         <#else>
     @TableField(fill = FieldFill.${field.fill})
         </#if>
-    <#elseif field.convert>
+    <#elseif field.convert??>
     @TableField("${field.annotationColumnName}")
     </#if>
     <#-- 乐观锁注解 -->
-    <#if field.versionField>
+    <#if field.versionField??>
     @Version
     </#if>
     <#-- 逻辑删除注解 -->
-    <#if field.logicDeleteField>
+    <#if field.logicDeleteField??>
     @TableLogic
     </#if>
     private ${field.propertyType} ${field.propertyName};
 </#list>
 <#------------  END 字段循环遍历  ---------->
-<#if !entityLombokModel>
+<#if !entityLombokModel??>
     <#list table.fields as field>
         <#if field.propertyType == "boolean">
             <#assign getprefix="is"/>
@@ -113,25 +115,25 @@ public class ${entity} {
         return ${field.propertyName};
     }
 
-    <#if chainModel>
+    <#if chainModel??>
     public ${entity} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
     <#else>
     public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
     </#if>
         this.${field.propertyName} = ${field.propertyName};
-        <#if chainModel>
+        <#if chainModel??>
         return this;
         </#if>
     }
     </#list>
 </#if>
-<#if entityColumnConstant>
+<#if entityColumnConstant??>
     <#list table.fields as field>
 
     public static final String ${field.name?upper_case} = "${field.name}";
     </#list>
 </#if>
-<#if activeRecord>
+<#if activeRecord??>
 
     @Override
     public Serializable pkVal() {
@@ -142,7 +144,7 @@ public class ${entity} {
     </#if>
     }
 </#if>
-<#if !entityLombokModel>
+<#if !entityLombokModel??>
 
     @Override
     public String toString() {

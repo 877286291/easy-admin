@@ -8,9 +8,9 @@ public enum OutputFile {
     dto,
     vo,
     query,
-    repository,
+    mapper,
+    xml,
     service,
-    serviceImpl,
     controller,
     parent,
 }

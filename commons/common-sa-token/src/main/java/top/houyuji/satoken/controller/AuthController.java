@@ -16,13 +16,13 @@ import top.houyuji.common.base.core.UserInfo;
 import top.houyuji.common.base.utils.PasswordUtil;
 import top.houyuji.common.base.utils.StrUtil;
 import top.houyuji.common.cache.core.EasyAdminCache;
-import top.houyuji.satoken.controller.mapstruct.LoginInfoMapstruct;
 import top.houyuji.satoken.domain.LoginRequest;
 import top.houyuji.satoken.domain.dto.UserInfoDTO;
 import top.houyuji.satoken.domain.vo.LoginInfoVo;
 import top.houyuji.satoken.domain.vo.RouteVO;
 import top.houyuji.satoken.service.UserLoginService;
 import top.houyuji.satoken.service.UserRouterService;
+import top.houyuji.satoken.service.mapstruct.LoginInfoMapstruct;
 import top.houyuji.satoken.utils.SaTokenUtil;
 
 import java.util.List;

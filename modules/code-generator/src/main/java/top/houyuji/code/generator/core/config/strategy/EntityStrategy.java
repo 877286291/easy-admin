@@ -124,6 +124,7 @@ public class EntityStrategy implements ITemplate, IStrategy {
         renderData.put("idType", this.idType);
         renderData.put("entitySerialVersionUID", this.serialVersionUID);
         renderData.put("superEntityClass", ClassUtil.getSimpleName(superClass));
+        renderData.put("entityPath", StrUtil.toCamelCase(tableInfo.getName()));
         return renderData;
 
     }

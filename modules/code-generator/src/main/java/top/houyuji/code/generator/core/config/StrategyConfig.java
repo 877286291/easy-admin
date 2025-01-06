@@ -56,16 +56,16 @@ public class StrategyConfig {
     private final EntityStrategy.Builder entityStrategyBuilder = new EntityStrategy.Builder(this);
     private final DtoStrategy.Builder dtoStrategyBuilder = new DtoStrategy.Builder(this);
     private final QueryStrategy.Builder queryStrategyBuilder = new QueryStrategy.Builder(this);
-    private final RepositoryStrategy.Builder repositoryStrategyBuilder = new RepositoryStrategy.Builder(this);
+    private final MapperStrategy.Builder mapperStrategyBuilder = new MapperStrategy.Builder(this);
+    private final MapperXmlStrategy.Builder mapperXmlStrategyBuilder = new MapperXmlStrategy.Builder(this);
     private final ServiceStrategy.Builder serviceStrategyBuilder = new ServiceStrategy.Builder(this);
-    private final ServiceImplStrategy.Builder serviceImplStrategyBuilder = new ServiceImplStrategy.Builder(this);
     private final ControllerStrategy.Builder controllerStrategyBuilder = new ControllerStrategy.Builder(this);
     private EntityStrategy entityStrategy;
     private DtoStrategy dtoStrategy;
     private QueryStrategy queryStrategy;
-    private RepositoryStrategy repositoryStrategy;
+    private MapperStrategy mapperStrategy;
+    private MapperXmlStrategy mapperXmlStrategy;
     private ServiceStrategy serviceStrategy;
-    private ServiceImplStrategy serviceImplStrategy;
     private ControllerStrategy controllerStrategy;
     private IOutputFile outputFile = (path, ot) -> new File(path);
 
@@ -138,15 +138,27 @@ public class StrategyConfig {
     }
 
     /**
-     * 获取repository策略
+     * 获取mapper策略
      *
-     * @return {@link RepositoryStrategy}
+     * @return {@link MapperStrategy}
      */
-    public RepositoryStrategy getRepositoryStrategy() {
-        if (repositoryStrategy == null) {
-            repositoryStrategy = repositoryStrategyBuilder.get();
+    public MapperStrategy getMapperStrategy() {
+        if (mapperStrategy == null) {
+            mapperStrategy = mapperStrategyBuilder.get();
         }
-        return repositoryStrategy;
+        return mapperStrategy;
+    }
+
+    /**
+     * 获取mapper xml策略
+     *
+     * @return {@link MapperXmlStrategy}
+     */
+    public MapperXmlStrategy getMapperXmlStrategy() {
+        if (mapperXmlStrategy == null) {
+            mapperXmlStrategy = mapperXmlStrategyBuilder.get();
+        }
+        return mapperXmlStrategy;
     }
 
     /**
@@ -161,17 +173,6 @@ public class StrategyConfig {
         return serviceStrategy;
     }
 
-    /**
-     * 获取serviceImpl策略
-     *
-     * @return {@link ServiceImplStrategy}
-     */
-    public ServiceImplStrategy getServiceImplStrategy() {
-        if (serviceImplStrategy == null) {
-            serviceImplStrategy = serviceImplStrategyBuilder.get();
-        }
-        return serviceImplStrategy;
-    }
 
     /**
      * 获取controller策略

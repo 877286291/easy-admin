@@ -12,23 +12,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Repository 生成策略
+ * Mapper Java 生成策略
  */
 @Getter
-public class RepositoryStrategy implements ITemplate, IStrategy {
+public class MapperStrategy implements ITemplate, IStrategy {
     /**
-     * 自定义继承的Repository类全称，带包名
+     * 自定义继承的Mapper类全称，带包名
      */
-    private String superClass = ConstVal.SUPER_REPOSITORY_CLASS;
+    private String superClass = ConstVal.SUPER_MAPPER_CLASS;
     /**
-     * Repository 模板
+     * Mapper 模板
      */
-    private String javaTemplate = ConstVal.REPOSITORY_TEMPLATE;
-
+    private String javaTemplate = ConstVal.MAPPER_TEMPLATE;
     /**
      * 转换输出文件名称
      */
-    private ConverterFileName converterFileName = (entityName) -> (entityName + ConstVal.REPOSITORY);
+    private ConverterFileName converterFileName = (entityName) -> (entityName + ConstVal.MAPPER);
     /**
      * 是否覆盖已有文件
      */
@@ -37,26 +36,26 @@ public class RepositoryStrategy implements ITemplate, IStrategy {
     @Override
     public Map<String, Object> renderData(TableInfo tableInfo) {
         Map<String, Object> data = new HashMap<>();
-        data.put("superRepositoryClassPackage", superClass);
-        data.put("superRepositoryClass", ClassUtil.getSimpleName(superClass));
+        data.put("superMapperClassPackage", superClass);
+        data.put("superMapperClass", ClassUtil.getSimpleName(superClass));
         return data;
     }
 
     public static class Builder extends BaseBuilder {
-        private final RepositoryStrategy repositoryStrategy = new RepositoryStrategy();
+        private final MapperStrategy mapperStrategy = new MapperStrategy();
 
         public Builder(StrategyConfig strategyConfig) {
             super(strategyConfig);
         }
 
         /**
-         * Repository 模板
+         * Mapper 模板
          *
          * @param javaTemplate 模板
          * @return this
          */
         public Builder javaTemplate(String javaTemplate) {
-            repositoryStrategy.javaTemplate = javaTemplate;
+            mapperStrategy.javaTemplate = javaTemplate;
             return this;
         }
 
@@ -67,7 +66,7 @@ public class RepositoryStrategy implements ITemplate, IStrategy {
          * @return this
          */
         public Builder superClass(String superClass) {
-            repositoryStrategy.superClass = superClass;
+            mapperStrategy.superClass = superClass;
             return this;
         }
 
@@ -79,7 +78,7 @@ public class RepositoryStrategy implements ITemplate, IStrategy {
          * @see ConverterFileName
          */
         public Builder converterFileName(ConverterFileName converterFileName) {
-            repositoryStrategy.converterFileName = converterFileName;
+            mapperStrategy.converterFileName = converterFileName;
             return this;
         }
 
@@ -89,7 +88,7 @@ public class RepositoryStrategy implements ITemplate, IStrategy {
          * @return this
          */
         public Builder enableFileOverride() {
-            repositoryStrategy.fileOverride = true;
+            mapperStrategy.fileOverride = true;
             return this;
         }
 
@@ -99,12 +98,12 @@ public class RepositoryStrategy implements ITemplate, IStrategy {
          * @return this
          */
         public Builder disableFileOverride() {
-            repositoryStrategy.fileOverride = false;
+            mapperStrategy.fileOverride = false;
             return this;
         }
 
-        public RepositoryStrategy get() {
-            return repositoryStrategy;
+        public MapperStrategy get() {
+            return mapperStrategy;
         }
     }
 }

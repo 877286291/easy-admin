@@ -48,22 +48,23 @@ public abstract class BaseBuilder implements IBuilder<StrategyConfig> {
         return this.strategyConfig.getServiceStrategyBuilder();
     }
 
+
     /**
-     * serviceImpl 策略
+     * mapper 策略
      *
-     * @return serviceImpl 策略
+     * @return mapper 策略
      */
-    public ServiceImplStrategy.Builder serviceImplStrategyBuilder() {
-        return this.strategyConfig.getServiceImplStrategyBuilder();
+    public MapperStrategy.Builder mapperStrategyBuilder() {
+        return this.strategyConfig.getMapperStrategyBuilder();
     }
 
     /**
-     * repository 策略
+     * mapper xml 策略
      *
-     * @return repository 策略
+     * @return mapper xml 策略
      */
-    public RepositoryStrategy.Builder repositoryStrategyBuilder() {
-        return this.strategyConfig.getRepositoryStrategyBuilder();
+    public MapperXmlStrategy.Builder mapperXmlStrategyBuilder() {
+        return this.strategyConfig.getMapperXmlStrategyBuilder();
     }
 
     /**

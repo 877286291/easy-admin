@@ -34,7 +34,7 @@ public class ServiceStrategy implements ITemplate, IStrategy {
     /**
      * 转换输出Service文件名称
      */
-    private ConverterFileName converterFileName = (entityName -> "I" + entityName + ConstVal.SERVICE);
+    private ConverterFileName converterFileName = (entityName -> entityName + ConstVal.SERVICE);
     /**
      * 是否覆盖已有文件
      */

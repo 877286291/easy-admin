@@ -20,7 +20,7 @@ public class PackageConfig {
     private String dto = "domain.dto";
     private String vo = "domain.vo";
     private String query = "domain.query";
-    private String repository = "repository";
+    private String mapper = "mapper";
     private String service = "service";
     private String serviceImpl = "service.impl";
     private String controller = "controller";
@@ -49,7 +49,7 @@ public class PackageConfig {
             packageInfo.put(ConstVal.PACKAGE_DTO, this.joinPackage(this.getDto()));
             packageInfo.put(ConstVal.PACKAGE_VO, this.joinPackage(this.getVo()));
             packageInfo.put(ConstVal.PACKAGE_QUERY, this.joinPackage(this.getQuery()));
-            packageInfo.put(ConstVal.PACKAGE_REPOSITORY, this.joinPackage(this.getRepository()));
+            packageInfo.put(ConstVal.PACKAGE_MAPPER, this.joinPackage(this.getMapper()));
             packageInfo.put(ConstVal.PACKAGE_SERVICE, this.joinPackage(this.getService()));
             packageInfo.put(ConstVal.PACKAGE_SERVICE_IMPL, this.joinPackage(this.getServiceImpl()));
             packageInfo.put(ConstVal.PACKAGE_CONTROLLER, this.joinPackage(this.getController()));
@@ -153,13 +153,13 @@ public class PackageConfig {
         }
 
         /**
-         * 设置repository
+         * 设置mapper
          *
-         * @param repository .
+         * @param mapper .
          * @return .
          */
-        public Builder repository(String repository) {
-            packageConfig.repository = repository;
+        public Builder mapper(String mapper) {
+            packageConfig.mapper = mapper;
             return this;
         }
 

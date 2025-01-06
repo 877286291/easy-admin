@@ -1,26 +1,22 @@
 package ${package.Mapper};
 
-import ${package.Entity}.${entity};
+import ${package.Entity}.${table.entityName};
 import ${superMapperClassPackage};
-<#if mapperAnnotationClass??>
-import ${mapperAnnotationClass.name};
-</#if>
+import org.apache.ibatis.annotations.Mapper;
 
 /**
+<#if table.comment!?length gt 0>
  * <p>
- * ${table.comment!} Mapper 接口
+ * ${table.comment!}
  * </p>
  *
- * @author ${author}
- * @since ${date}
- */
-<#if mapperAnnotationClass??>
-@${mapperAnnotationClass.simpleName}
 </#if>
-<#if kotlin>
-interface ${table.mapperName} : ${superMapperClass}<${entity}>
-<#else>
-public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+* @author ${author}
+* @since ${date}
+*/
+
+
+@Mapper
+public interface ${table.mapperName} extends ${superMapperClass}<${table.entityName}> {
 
 }
-</#if>

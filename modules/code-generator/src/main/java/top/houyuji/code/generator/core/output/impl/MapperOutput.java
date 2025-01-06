@@ -7,31 +7,32 @@ import top.houyuji.code.generator.core.output.AbstractOutput;
 
 import java.io.File;
 
-
-public class ServiceImplOutput extends AbstractOutput {
+/**
+ * Mapper 输出
+ */
+public class MapperOutput extends AbstractOutput {
     private final AbstractTemplateEngine engine;
 
-    public ServiceImplOutput(AbstractTemplateEngine engine) {
+    public MapperOutput(AbstractTemplateEngine engine) {
         super(engine);
         this.engine = engine;
     }
 
     @Override
     protected OutputFile getOutputFile() {
-        return OutputFile.serviceImpl;
+        return OutputFile.mapper;
     }
 
     @Override
     protected String getFilePath(String entityName) {
-        String filename = getStrategyConfig().getConverterFileName().converter(entityName);
-        return getPathInfo(getOutputFile()) + File.separator + filename + ".java";
+        String filename = this.getStrategyConfig().getConverterFileName().converter(entityName);
+        String pathInfo = getPathInfo(getOutputFile());
+        return pathInfo + File.separator + filename + ".java";
     }
 
     @Override
     protected String getTemplatePath() {
-        return engine.templateFilePath(
-                getStrategyConfig().getJavaTemplate()
-        );
+        return engine.templateFilePath(getStrategyConfig().getJavaTemplate());
     }
 
     @Override
@@ -39,6 +40,6 @@ public class ServiceImplOutput extends AbstractOutput {
         return engine
                 .getConfigBuilder()
                 .getStrategyConfig()
-                .getServiceImplStrategy();
+                .getMapperStrategy();
     }
 }

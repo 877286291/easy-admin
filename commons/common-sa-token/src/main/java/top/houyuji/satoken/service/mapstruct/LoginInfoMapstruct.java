@@ -1,4 +1,4 @@
-package top.houyuji.satoken.controller.mapstruct;
+package top.houyuji.satoken.service.mapstruct;
 
 import org.mapstruct.Mapper;
 import top.houyuji.common.base.mapstruct.BaseMapstruct;

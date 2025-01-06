@@ -8,26 +8,26 @@ import top.houyuji.code.generator.core.output.AbstractOutput;
 import java.io.File;
 
 /**
- * Repository 输出
+ * Mapper 输出
  */
-public class RepositoryOutput extends AbstractOutput {
+public class MapperXmlOutput extends AbstractOutput {
     private final AbstractTemplateEngine engine;
 
-    public RepositoryOutput(AbstractTemplateEngine engine) {
+    public MapperXmlOutput(AbstractTemplateEngine engine) {
         super(engine);
         this.engine = engine;
     }
 
     @Override
     protected OutputFile getOutputFile() {
-        return OutputFile.repository;
+        return OutputFile.xml;
     }
 
     @Override
     protected String getFilePath(String entityName) {
         String filename = this.getStrategyConfig().getConverterFileName().converter(entityName);
         String pathInfo = getPathInfo(getOutputFile());
-        return pathInfo + File.separator + filename + ".java";
+        return pathInfo + File.separator + filename + ".xml";
     }
 
     @Override
@@ -40,6 +40,6 @@ public class RepositoryOutput extends AbstractOutput {
         return engine
                 .getConfigBuilder()
                 .getStrategyConfig()
-                .getRepositoryStrategy();
+                .getMapperXmlStrategy();
     }
 }
