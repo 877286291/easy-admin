@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.houyuji.basic.domain.dto.BasRoleDTO;
 import top.houyuji.basic.domain.query.BasRoleQuery;
 import top.houyuji.basic.service.BasRoleService;
+import top.houyuji.common.api.BaseQuery;
 import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.R;
 import top.houyuji.satoken.utils.SaTokenUtil;
@@ -32,7 +34,7 @@ public class BasRoleController {
      */
     @GetMapping
     @Operation(summary = "分页查询")
-    public R<JsfPage<BasRoleDTO>> page(BasRoleQuery query) {
+    public R<JsfPage<BasRoleDTO>> page(@Validated({BaseQuery.PageGroup.class}) BasRoleQuery query) {
         String sysCode = SaTokenUtil.getSysCode();
         query.setSysCode(sysCode);
         JsfPage<BasRoleDTO> res = service.page(query);

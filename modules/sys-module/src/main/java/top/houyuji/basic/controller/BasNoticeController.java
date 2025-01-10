@@ -3,10 +3,12 @@ package top.houyuji.basic.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.houyuji.basic.domain.dto.BasNoticeDTO;
 import top.houyuji.basic.domain.query.BasNoticeQuery;
 import top.houyuji.basic.service.BasNoticeService;
+import top.houyuji.common.api.BaseQuery;
 import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.R;
 import top.houyuji.satoken.domain.dto.UserInfoDTO;
@@ -50,7 +52,7 @@ public class BasNoticeController {
      */
     @GetMapping("/page")
     @Operation(summary = "分页查询公告")
-    public R<JsfPage<BasNoticeDTO>> page(BasNoticeQuery query) {
+    public R<JsfPage<BasNoticeDTO>> page(@Validated({BaseQuery.PageGroup.class}) BasNoticeQuery query) {
         UserInfoDTO currentUser = SaTokenUtil.getCurrentUser();
         if (currentUser == null) {
             return R.NG("用户未登录");

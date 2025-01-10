@@ -3,19 +3,21 @@ package top.houyuji.basic.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.houyuji.basic.domain.dto.BasUserDTO;
 import top.houyuji.basic.domain.dto.BasUserRestPasswordDTO;
 import top.houyuji.basic.domain.dto.BasUserSaveDTO;
 import top.houyuji.basic.domain.query.BasUserQuery;
 import top.houyuji.basic.service.BasUserService;
+import top.houyuji.common.api.BaseQuery;
 import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.R;
 import top.houyuji.common.base.utils.PasswordUtil;
 import top.houyuji.common.base.utils.StrUtil;
 import top.houyuji.satoken.utils.SaTokenUtil;
+import top.houyuji.sys.domain.dto.UserRestPwdDTO;
 
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class BasUserController {
 
     @GetMapping
     @Operation(summary = "分页查询")
-    public R<JsfPage<BasUserDTO>> page(BasUserQuery query) {
+    public R<JsfPage<BasUserDTO>> page(@Validated({BaseQuery.PageGroup.class}) BasUserQuery query) {
         String sysCode = SaTokenUtil.getSysCode();
         query.setSysCode(sysCode);
         JsfPage<BasUserDTO> res = service.page(query);
@@ -68,7 +70,7 @@ public class BasUserController {
 
     @PostMapping
     @Operation(summary = "保存")
-    public R<String> save(@Valid @RequestBody BasUserSaveDTO dto) {
+    public R<String> save(@Validated({BasUserSaveDTO.AddGroup.class}) @RequestBody BasUserSaveDTO dto) {
         if (StrUtil.isBlank(dto.getPassword())) {
             return R.NG("密码不能为空");
         }
@@ -79,13 +81,10 @@ public class BasUserController {
         return R.OK();
     }
 
-    @PutMapping
+    @PutMapping("/{userId}")
     @Operation(summary = "更新")
-    public R<String> update(@Valid @RequestBody BasUserSaveDTO dto) {
-        String id = dto.getId();
-        if (id == null) {
-            return R.NG("id不能为空");
-        }
+    public R<String> update(@Validated({BasUserSaveDTO.UpdateGroup.class}) @RequestBody BasUserSaveDTO dto, @PathVariable String userId) {
+        dto.setId(userId);
         dto.setSysCode(SaTokenUtil.getSysCode());
         dto.setPassword(null);
         service.updateById(dto);
@@ -100,7 +99,7 @@ public class BasUserController {
      */
     @PutMapping("/restPassword")
     @Operation(summary = "重置密码")
-    public R<String> restPassword(@Valid @RequestBody BasUserRestPasswordDTO dto) {
+    public R<String> restPassword(@Validated({UserRestPwdDTO.RestPwdGroup.class}) @RequestBody BasUserRestPasswordDTO dto) {
         String username = SaTokenUtil.getUsername();
         dto.setOperator(username);
         dto.setPassword(PasswordUtil.encoder(dto.getPassword()));
