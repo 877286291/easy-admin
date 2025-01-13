@@ -37,7 +37,7 @@ public class TenantController {
     @Operation(summary = "商户识别码是否存在")
     @Parameters({
             @io.swagger.v3.oas.annotations.Parameter(name = "sysCode", description = "商户识别码", required = true),
-            @io.swagger.v3.oas.annotations.Parameter(name = "id", description = "需要排除的ID", required = false)
+            @io.swagger.v3.oas.annotations.Parameter(name = "id", description = "需要排除的ID")
     })
     public R<Boolean> existsBySysCode(String sysCode, @RequestParam(name = "id", required = false) String id) {
         Boolean res = tenantService.existsCode(sysCode, id);
