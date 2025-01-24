@@ -20,6 +20,7 @@
         <module>common-query</module>
         <module>common-cache</module>
         <module>common-sa-token</module>
+        <module>common-websocket</module>
     </modules>
 
     <properties>
