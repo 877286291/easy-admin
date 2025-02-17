@@ -1,5 +1,7 @@
 package top.houyuji.websocket.handler;
 
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
@@ -8,36 +10,31 @@ import org.springframework.web.socket.WebSocketSession;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+@Slf4j
 public class MyWebSocketHandler implements WebSocketHandler {
 
-    // 存储 WebSocket 会话的集合
     private static final ConcurrentMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // 连接建立后调用
-        System.out.println("Connected: " + session.getId());
-        // 将会话存储到集合中
+    public void afterConnectionEstablished(@NonNull WebSocketSession session) {
+        log.info("Connected: {}", session.getId());
         sessions.put(session.getId(), session);
     }
 
     @Override
-    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        // 接收到消息后调用
-        System.out.println("Received: " + message.getPayload());
+    public void handleMessage(@NonNull WebSocketSession session, @NonNull WebSocketMessage<?> message) {
+        log.info("Received: {}", message.getPayload());
+        // 在这里处理接收到的消息
     }
 
     @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        // 出现异常后调用
-        System.out.println("Error: " + exception.getMessage());
+    public void handleTransportError(@NonNull WebSocketSession session, @NonNull Throwable exception) {
+        log.error("Error for session {}: {}", session.getId(), exception.getMessage(), exception);
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        // 连接关闭后调用
-        System.out.println("Closed: " + session.getId());
-        // 从集合中移除会话
+    public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus closeStatus) {
+        log.info("Closed: {} with status {}", session.getId(), closeStatus);
         sessions.remove(session.getId());
     }
 
@@ -46,5 +43,4 @@ public class MyWebSocketHandler implements WebSocketHandler {
         return false;
     }
 
-    // 其他方法可以使用 sessions 集合来访问和管理会话
 }
