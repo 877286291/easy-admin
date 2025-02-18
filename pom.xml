@@ -46,6 +46,7 @@
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <javax-activation.version>1.1.1</javax-activation.version>
         <sa-token.version>1.39.0</sa-token.version>
+        <oshi.version>6.6.0</oshi.version>
     </properties>
     <dependencies>
         <dependency>
@@ -211,6 +212,11 @@
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-redis</artifactId>
                 <version>${sa-token.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.oshi</groupId>
+                <artifactId>oshi-core</artifactId>
+                <version>${oshi.version}</version>
             </dependency>
 
         </dependencies>
