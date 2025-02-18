@@ -25,7 +25,7 @@ spring:
 logging:
   level:
     root: info
-    top.houyuji: debug
+    top.houyuji: info
 # 项目配置
 easy:
   admin:

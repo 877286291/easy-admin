@@ -3,11 +3,6 @@ server:
   servlet:
     context-path: /api/v1
 
-logging:
-  level:
-    root: info
-    top.houyuji: debug
-
 spring:
   application:
     name: easy-admin
