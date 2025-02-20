@@ -5,10 +5,9 @@
     <parent>
         <groupId>top.houyuji</groupId>
         <artifactId>easy-admin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>admin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>admin</name>
     <description>admin</description>
 
@@ -19,18 +18,18 @@
         <dependency>
             <groupId>top.houyuji</groupId>
             <artifactId>common-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>top.houyuji</groupId>
             <artifactId>sys-module</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>top.houyuji</groupId>
             <artifactId>biz-module</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
@@ -53,11 +52,12 @@
         <dependency>
             <groupId>top.houyuji</groupId>
             <artifactId>common-websocket</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -9,7 +9,7 @@
     </parent>
     <groupId>top.houyuji</groupId>
     <artifactId>easy-admin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>easy-admin</name>
     <description>easy-admin</description>
     <packaging>pom</packaging>
@@ -19,7 +19,7 @@
         <module>modules</module>
     </modules>
     <properties>
-        <revision>6.2.0-SNAPSHOT</revision>
+        <revision>0.0.1-SNAPSHOT</revision>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

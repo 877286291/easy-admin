@@ -6,7 +6,7 @@
     <parent>
         <groupId>top.houyuji</groupId>
         <artifactId>commons</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>common-query</artifactId>

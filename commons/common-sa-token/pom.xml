@@ -6,7 +6,7 @@
     <parent>
         <groupId>top.houyuji</groupId>
         <artifactId>commons</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>common-sa-token</artifactId>
@@ -29,17 +29,17 @@
         <dependency>
             <groupId>top.houyuji</groupId>
             <artifactId>common-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>top.houyuji</groupId>
             <artifactId>common-mybatis-tenant</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>top.houyuji</groupId>
             <artifactId>common-cache</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
     <properties>

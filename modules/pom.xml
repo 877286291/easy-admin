@@ -5,7 +5,7 @@
     <parent>
         <groupId>top.houyuji</groupId>
         <artifactId>easy-admin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>modules</artifactId>
     <packaging>pom</packaging>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>top.houyuji</groupId>
             <artifactId>common-mybatis-tenant</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
