@@ -5,18 +5,31 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>top.houyuji</groupId>
-        <artifactId>modules</artifactId>
+        <artifactId>commons</artifactId>
         <version>${revision}</version>
     </parent>
-    <artifactId>biz-module</artifactId>
+
+    <artifactId>common-xxl-job</artifactId>
+
     <properties>
-        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
         <dependency>
             <groupId>top.houyuji</groupId>
-            <artifactId>common-xxl-job</artifactId>
+            <artifactId>common-base</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
+        </dependency>
     </dependencies>
+
 </project>

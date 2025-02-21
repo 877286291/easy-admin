@@ -3,12 +3,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://47.95.214.75:3306/easy_admin?serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true
     username: root
-    password: Hyj877286291
+    password: root
   data:
     redis:
       host: 47.95.214.75
       port: 6379
-      password: 5@K_dp1zfTfEj}
+      password:
       database: 0
       # 连接超时时间
       timeout: 10s
@@ -32,7 +32,7 @@ easy:
     cache:
       enabled: true
       prefix: "easy_admin"
-# sa-token配置
+
 sa-token:
   # token 名称（同时也是 cookie 名称）
   token-name: easy_admin
@@ -48,3 +48,16 @@ sa-token:
   token-style: tik
   # 是否输出操作日志
   is-log: true
+# xxl-job配置
+xxl:
+  job:
+    admin:
+      addresses: http://127.0.0.1:9000/xxl-job-admin
+    accessToken: default_token
+    executor:
+      address:
+      appname: xxl-job-executor
+      ip:
+      port: 9999
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30

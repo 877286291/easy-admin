@@ -21,6 +21,7 @@
         <module>common-cache</module>
         <module>common-sa-token</module>
         <module>common-websocket</module>
+        <module>common-xxl-job</module>
     </modules>
 
     <properties>
