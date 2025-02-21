@@ -23,7 +23,8 @@ public class XxlJobUtil {
     private static final String API_UPDATE_JOB = "/jobinfo/update";
     private static final String API_REMOVE_JOB = "/jobinfo/remove";
     private static final String API_LIST_JOBS = "/jobinfo/pageList";
-
+    private static final String API_START_JOB = "/jobinfo/start";
+    private static final String API_STOP_JOB = "/jobinfo/stop";
     private static String authCookie;
     private static String adminAddress;
 
@@ -178,6 +179,7 @@ public class XxlJobUtil {
                 if (response.isOk()) {
                     return JSONUtil.parseObj(response.body());
                 } else {
+                    login();
                     log.error("Request to XXL-Job failed. Status code: {}", response.getStatus());
                     return new HashMap<>();
                 }
@@ -186,6 +188,32 @@ public class XxlJobUtil {
             log.error("Error occurred while calling XXL-Job API", e);
             return new HashMap<>();
         }
+    }
+
+    /**
+     * 启动定时任务
+     *
+     * @param jobId 任务ID
+     * @return 操作结果
+     */
+    public static String startJob(int jobId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", jobId);
+        Map<String, Object> responseResult = doRequest(ApiEndpoint.START_JOB.getFullUrl(), params);
+        return (String) responseResult.getOrDefault("content", "");
+    }
+
+    /**
+     * 停止定时任务
+     *
+     * @param jobId 任务ID
+     * @return 操作结果
+     */
+    public static String stopJob(int jobId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", jobId);
+        Map<String, Object> responseResult = doRequest(ApiEndpoint.STOP_JOB.getFullUrl(), params);
+        return (String) responseResult.getOrDefault("content", "");
     }
 
     @PostConstruct
@@ -204,7 +232,9 @@ public class XxlJobUtil {
         ADD_JOB(API_ADD_JOB),
         UPDATE_JOB(API_UPDATE_JOB),
         REMOVE_JOB(API_REMOVE_JOB),
-        LIST_JOBS(API_LIST_JOBS);
+        LIST_JOBS(API_LIST_JOBS),
+        START_JOB(API_START_JOB),
+        STOP_JOB(API_STOP_JOB);
 
         private final String path;
 
