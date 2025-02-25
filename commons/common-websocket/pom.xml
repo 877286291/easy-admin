@@ -28,6 +28,11 @@
             <artifactId>common-base</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>top.houyuji</groupId>
+            <artifactId>common-sa-token</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
