@@ -70,11 +70,12 @@ public class XxlJobUtil {
      * @param jobDesc         任务描述
      * @param executorHandler 执行器
      * @param executorParam   执行器参数
+     * @param scheduleType    调度类型
      * @param cronExpression  cron表达式
      * @return 操作结果
      */
-    public static String addJob(String jobDesc, String executorHandler, String executorParam, String cronExpression) {
-        Map<String, Object> params = createCommonJobParams(jobDesc, executorHandler, executorParam, cronExpression);
+    public static String addJob(String jobDesc, String executorHandler, String executorParam, String scheduleType, String cronExpression) {
+        Map<String, Object> params = createCommonJobParams(jobDesc, executorHandler, executorParam, scheduleType, cronExpression);
         return (String) doRequest(ApiEndpoint.ADD_JOB.getFullUrl(), params).getOrDefault("content", "");
     }
 
@@ -85,11 +86,12 @@ public class XxlJobUtil {
      * @param jobDesc         任务描述
      * @param executorHandler 执行器
      * @param executorParam   执行器参数
+     * @param scheduleType    调度类型
      * @param cronExpression  cron表达式
      * @return 操作结果
      */
-    public static String updateJob(int jobId, String jobDesc, String executorHandler, String executorParam, String cronExpression) {
-        Map<String, Object> params = createCommonJobParams(jobDesc, executorHandler, executorParam, cronExpression);
+    public static String updateJob(int jobId, String jobDesc, String executorHandler, String executorParam, String scheduleType, String cronExpression) {
+        Map<String, Object> params = createCommonJobParams(jobDesc, executorHandler, executorParam, scheduleType, cronExpression);
         params.put("id", jobId);
         return (String) doRequest(ApiEndpoint.UPDATE_JOB.getFullUrl(), params).getOrDefault("content", "");
     }
@@ -97,15 +99,21 @@ public class XxlJobUtil {
     /**
      * 创建通用的任务参数
      */
-    private static Map<String, Object> createCommonJobParams(String jobDesc, String executorHandler, String executorParam, String cronExpression) {
+    private static Map<String, Object> createCommonJobParams(String jobDesc, String executorHandler, String executorParam, String scheduleType, String cronExpression) {
         Map<String, Object> params = new HashMap<>();
         params.put("jobGroup", 1);  // 假设默认使用 jobGroup 1，如果需要可以作为参数传入
         params.put("jobDesc", jobDesc);
         params.put("author", "XXL");
         params.put("alarmEmail", "");
-        params.put("scheduleType", "CRON");
-        params.put("scheduleConf", cronExpression);
-        params.put("cronGen_display", cronExpression);
+        if (scheduleType.equalsIgnoreCase("CRON")) {
+            params.put("scheduleType", "CRON");
+            params.put("scheduleConf", cronExpression);
+            params.put("cronGen_display", cronExpression);
+        } else {
+            params.put("scheduleType", "NONE");
+            params.put("scheduleConf", null);
+            params.put("cronGen_display", null);
+        }
         params.put("glueType", "BEAN");
         params.put("executorHandler", executorHandler);
         params.put("executorParam", executorParam);
