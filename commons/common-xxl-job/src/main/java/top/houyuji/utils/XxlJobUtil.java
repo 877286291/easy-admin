@@ -131,13 +131,11 @@ public class XxlJobUtil {
      * 删除定时任务
      *
      * @param jobId 任务ID
-     * @return 操作结果
      */
-    public static String removeJob(int jobId) {
+    public static void removeJob(int jobId) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", jobId);
-        Map<String, Object> responseResult = doRequest(ApiEndpoint.REMOVE_JOB.getFullUrl(), params);
-        return (String) responseResult.getOrDefault("content", "");
+        doRequest(ApiEndpoint.REMOVE_JOB.getFullUrl(), params);
     }
 
     /**
