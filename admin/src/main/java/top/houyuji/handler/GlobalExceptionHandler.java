@@ -103,8 +103,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
-    @ExceptionHandler(value = {UsernameNotFoundException.class})
-    public R<Object> handleSecurityException(UsernameNotFoundException e) {
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    public R<Object> handleUsernameNotFoundException(UsernameNotFoundException e) {
         return R.NG(USER_NOT_FOUND, null);
     }
 
