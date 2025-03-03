@@ -20,7 +20,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new SaInterceptor(handle -> {
-            SaRouter.match("/**", "/auth/login", r -> {
+            SaRouter.match("/**").notMatch("/auth/login").notMatch("/auth/logout").check(r -> {
                 StpUtil.checkLogin();
                 UserInfo userinfo = (UserInfo) StpUtil.getSession().get("userinfo");
                 UserContext.set(userinfo);
