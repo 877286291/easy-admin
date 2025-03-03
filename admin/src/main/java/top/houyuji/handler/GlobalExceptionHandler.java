@@ -19,11 +19,11 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import top.houyuji.common.base.R;
 import top.houyuji.common.base.exception.ServiceException;
+import top.houyuji.common.base.exception.UsernameNotFoundException;
 
 import java.util.List;
 
-import static top.houyuji.common.base.enums.ErrorCodeEnums.PERMISSION_DENIED;
-import static top.houyuji.common.base.enums.ErrorCodeEnums.USER_NOT_LOGIN;
+import static top.houyuji.common.base.enums.ErrorCodeEnums.*;
 
 /**
  * 全局异常处理
@@ -100,6 +100,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NoResourceFoundException.class)
     public R<Object> handleNoResourceFoundException(NoResourceFoundException e) {
         return R.NG(404, "路径" + e.getResourcePath() + "不存在");
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = {UsernameNotFoundException.class})
+    public R<Object> handleSecurityException(UsernameNotFoundException e) {
+        return R.NG(USER_NOT_FOUND, null);
     }
 
     @ResponseBody

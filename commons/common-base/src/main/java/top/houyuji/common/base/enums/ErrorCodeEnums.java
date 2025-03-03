@@ -10,6 +10,7 @@ public enum ErrorCodeEnums {
     PERMISSION_DENIED(1003, "访问权限不足"),
     // 用户 1101-1199
     USER_ID_REQUIRED(1101, "用户id不能为空"),
+    USER_NOT_FOUND(1102, "用户id不能为空"),
     // 角色 1201-1299
     ROLE_NOT_FOUND(1201, "角色不存在"),
     ROLE_IS_BINDING(1202, "角色已被绑定无法删除"),
