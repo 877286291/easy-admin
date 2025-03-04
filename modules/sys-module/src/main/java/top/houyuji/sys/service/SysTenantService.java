@@ -32,7 +32,6 @@ import top.houyuji.sys.domain.entity.SysTenantPermission;
 import top.houyuji.sys.domain.query.TenantQuery;
 import top.houyuji.sys.mapper.SysTenantMapper;
 import top.houyuji.sys.service.mapstruct.SysTenantBasicConfigMapstruct;
-import top.houyuji.sys.service.mapstruct.SysTenantSmallMapstruct;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,8 +42,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class SysTenantService extends BaseService<SysTenantMapper, SysTenant> {
-    private final SysTenantSmallMapstruct mapstruct;
-    private final SysTenantBasicConfigMapstruct mapstructBasicConfig;
+    private final SysTenantBasicConfigMapstruct sysTenantBasicConfigMapstruct;
     @Lazy
     @Resource
     private BasUserService basUserService;
@@ -173,7 +171,7 @@ public class SysTenantService extends BaseService<SysTenantMapper, SysTenant> {
         if (null == tenant) {
             throw new ServiceException("商户不存在");
         }
-        return mapstructBasicConfig.toDTO(tenant);
+        return sysTenantBasicConfigMapstruct.toDTO(tenant);
     }
 
     /**

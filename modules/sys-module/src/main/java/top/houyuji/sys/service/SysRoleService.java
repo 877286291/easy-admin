@@ -29,7 +29,7 @@ import static top.houyuji.common.base.enums.ErrorCodeEnums.*;
 @Slf4j
 @RequiredArgsConstructor
 public class SysRoleService extends BaseService<SysRoleMapper, SysRole> {
-    private final SysRoleMapstruct mapstruct;
+    private final SysRoleMapstruct sysRoleMapstruct;
 
     /**
      * 编码是否存在
@@ -64,7 +64,7 @@ public class SysRoleService extends BaseService<SysRoleMapper, SysRole> {
     public List<RoleDTO> list(RoleQuery query) {
         QueryWrapper<SysRole> queryWrapper = QueryHelper.ofBean(query);
         List<SysRole> list = list(queryWrapper);
-        return mapstruct.toDTOList(list);
+        return sysRoleMapstruct.toDTOList(list);
     }
 
     /**
@@ -77,7 +77,7 @@ public class SysRoleService extends BaseService<SysRoleMapper, SysRole> {
         QueryWrapper<SysRole> queryWrapper = QueryHelper.ofBean(query);
         IPage<SysRole> page = QueryHelper.toPage(query);
         page = page(page, queryWrapper);
-        List<RoleDTO> res = mapstruct.toDTOList(page.getRecords());
+        List<RoleDTO> res = sysRoleMapstruct.toDTOList(page.getRecords());
         return QueryHelper.toJsfPage(page, res);
     }
 
@@ -88,7 +88,7 @@ public class SysRoleService extends BaseService<SysRoleMapper, SysRole> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(RoleDTO dto) {
-        SysRole entity = mapstruct.toEntity(dto);
+        SysRole entity = sysRoleMapstruct.toEntity(dto);
         Boolean res = existsCode(entity.getCode(), entity.getId());
         if (res) {
             throw new ServiceException(ROLE_CODE_EXISTS);
@@ -103,7 +103,7 @@ public class SysRoleService extends BaseService<SysRoleMapper, SysRole> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void updateById(RoleDTO dto) {
-        SysRole role = mapstruct.toEntity(dto);
+        SysRole role = sysRoleMapstruct.toEntity(dto);
         role.setCode(null);
         SysRole entity = getById(role.getId());
         if (entity == null) {

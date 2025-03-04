@@ -29,7 +29,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class SysProductService extends BaseService<SysProductMapper, SysProduct> {
-    private final SysProductMapstruct mapstruct;
+    private final SysProductMapstruct sysProductMapstruct;
     @Lazy
     @Resource
     private BasOrgService basOrgService;
@@ -60,7 +60,7 @@ public class SysProductService extends BaseService<SysProductMapper, SysProduct>
     public List<ProductDTO> list(ProductQuery query) {
         QueryWrapper<SysProduct> queryWrapper = QueryHelper.ofBean(query);
         List<SysProduct> sysProducts = baseMapper.selectList(queryWrapper);
-        return mapstruct.toDTOList(sysProducts);
+        return sysProductMapstruct.toDTOList(sysProducts);
     }
 
     /**
@@ -73,7 +73,7 @@ public class SysProductService extends BaseService<SysProductMapper, SysProduct>
         QueryWrapper<SysProduct> queryWrapper = QueryHelper.ofBean(query);
         IPage<SysProduct> page = QueryHelper.toPage(query);
         page = baseMapper.selectPage(page, queryWrapper);
-        List<ProductDTO> dtoList = mapstruct.toDTOList(page.getRecords());
+        List<ProductDTO> dtoList = sysProductMapstruct.toDTOList(page.getRecords());
         return QueryHelper.toJsfPage(page, dtoList);
 
     }
@@ -86,7 +86,7 @@ public class SysProductService extends BaseService<SysProductMapper, SysProduct>
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(ProductDTO dto) {
-        SysProduct sysProduct = mapstruct.toEntity(dto);
+        SysProduct sysProduct = sysProductMapstruct.toEntity(dto);
         save(sysProduct);
     }
 

@@ -28,7 +28,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class SysNoticeService extends ServiceImpl<SysNoticeMapper, SysNotice> {
-    private final SysNoticeMapstruct mapstruct;
+    private final SysNoticeMapstruct sysNoticeMapstruct;
 
     /**
      * 统计不在ids中的数量
@@ -101,7 +101,7 @@ public class SysNoticeService extends ServiceImpl<SysNoticeMapper, SysNotice> {
         QueryWrapper<SysNotice> queryWrapper = QueryHelper.ofBean(query);
         IPage<SysNotice> page = QueryHelper.toPage(query);
         page = page(page, queryWrapper);
-        List<NoticeDTO> res = mapstruct.toDTOList(page.getRecords());
+        List<NoticeDTO> res = sysNoticeMapstruct.toDTOList(page.getRecords());
         // 获取产品对应的权限
 
 
@@ -117,7 +117,7 @@ public class SysNoticeService extends ServiceImpl<SysNoticeMapper, SysNotice> {
     public List<NoticeDTO> list(NoticeQuery query) {
         QueryWrapper<SysNotice> queryWrapper = QueryHelper.ofBean(query);
         List<SysNotice> list = list(queryWrapper);
-        return mapstruct.toDTOList(list);
+        return sysNoticeMapstruct.toDTOList(list);
     }
 
     /**
@@ -127,7 +127,7 @@ public class SysNoticeService extends ServiceImpl<SysNoticeMapper, SysNotice> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(NoticeDTO dto) {
-        SysNotice entity = mapstruct.toEntity(dto);
+        SysNotice entity = sysNoticeMapstruct.toEntity(dto);
         save(entity);
     }
 

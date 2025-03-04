@@ -36,7 +36,7 @@ import static top.houyuji.common.base.enums.ErrorCodeEnums.*;
 @Slf4j
 @RequiredArgsConstructor
 public class SysUserService extends BaseService<SysUserMapper, SysUser> {
-    private final SysUserMapstruct mapstruct;
+    private final SysUserMapstruct sysUserMapstruct;
     private final SysRoleService sysRoleService;
 
     /**
@@ -94,7 +94,7 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
         IPage<SysUser> page = QueryHelper.toPage(query);
         page = baseMapper.selectPage(page, queryWrapper);
 
-        List<UserDTO> res = mapstruct.toDTOList(page.getRecords());
+        List<UserDTO> res = sysUserMapstruct.toDTOList(page.getRecords());
         return QueryHelper.toJsfPage(page, res);
     }
 
@@ -107,7 +107,7 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
     public List<UserDTO> list(UserQuery query) {
         QueryWrapper<SysUser> queryWrapper = QueryHelper.ofBean(query);
         List<SysUser> list = baseMapper.selectList(queryWrapper);
-        return mapstruct.toDTOList(list);
+        return sysUserMapstruct.toDTOList(list);
     }
 
     /**
@@ -129,7 +129,7 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
     public void save(UserSaveDTO dto) {
         // 验证角色id是否存在
         checkRoleIdExist(dto);
-        SysUser entity = mapstruct.saveDTOToEntity(dto);
+        SysUser entity = sysUserMapstruct.saveDTOToEntity(dto);
         baseMapper.insert(entity);
         if (CollectionUtil.isNotEmpty(dto.getRoles())) {
             baseMapper.saveUserRole(entity.getId(), dto.getRoles().stream().map(RoleSmallDTO::getId).toList());
@@ -143,7 +143,7 @@ public class SysUserService extends BaseService<SysUserMapper, SysUser> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void updateById(UserSaveDTO dto) {
-        SysUser sysUser = mapstruct.saveDTOToEntity(dto);
+        SysUser sysUser = sysUserMapstruct.saveDTOToEntity(dto);
         if (StrUtil.isBlank(sysUser.getId())) {
             throw new ServiceException(USER_ID_REQUIRED);
         }

@@ -33,8 +33,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysPermissionService extends BaseService<SysPermissionMapper, SysPermission> {
 
-    private final SysPermissionMapstruct mapstruct;
-    private final SysPermissionSaveMapstruct saveMapstruct;
+    private final SysPermissionMapstruct sysPermissionMapstruct;
+    private final SysPermissionSaveMapstruct sysPermissionSaveMapstruct;
     @Lazy
     @Resource
     private SysRoleService sysRoleService;
@@ -52,7 +52,7 @@ public class SysPermissionService extends BaseService<SysPermissionMapper, SysPe
         }
         List<String> roleIds = CollectionUtil.listToList(roles, SysRole::getId);
         List<SysPermission> sysPermissions = listByRoleIds(roleIds);
-        return mapstruct.toDTOList(sysPermissions);
+        return sysPermissionMapstruct.toDTOList(sysPermissions);
     }
 
     /**
@@ -101,7 +101,7 @@ public class SysPermissionService extends BaseService<SysPermissionMapper, SysPe
         QueryWrapper<SysPermission> queryWrapper = QueryHelper.ofBean(query);
         queryWrapper = QueryHelper.order(queryWrapper, query);
         List<SysPermission> list = list(queryWrapper);
-        return mapstruct.toDTOList(list);
+        return sysPermissionMapstruct.toDTOList(list);
     }
 
     /**
@@ -115,7 +115,7 @@ public class SysPermissionService extends BaseService<SysPermissionMapper, SysPe
                 .eq(SysPermission::getEnabled, true)
                 .orderByAsc(SysPermission::getRank);
         List<SysPermission> list = list(queryWrapper);
-        return mapstruct.toDTOList(list);
+        return sysPermissionMapstruct.toDTOList(list);
     }
 
     /**
@@ -125,7 +125,7 @@ public class SysPermissionService extends BaseService<SysPermissionMapper, SysPe
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(PermissionSaveDTO dto) {
-        SysPermission entity = saveMapstruct.toEntity(dto);
+        SysPermission entity = sysPermissionSaveMapstruct.toEntity(dto);
         save(entity);
     }
 
@@ -136,7 +136,7 @@ public class SysPermissionService extends BaseService<SysPermissionMapper, SysPe
      */
     @Transactional(rollbackFor = Exception.class)
     public void updateById(PermissionSaveDTO dto) {
-        SysPermission saveData = saveMapstruct.toEntity(dto);
+        SysPermission saveData = sysPermissionSaveMapstruct.toEntity(dto);
         if (null == saveData.getId()) {
             throw new ServiceException("id不能为空");
         }
@@ -161,8 +161,8 @@ public class SysPermissionService extends BaseService<SysPermissionMapper, SysPe
             throw new ServiceException("请先删除子节点");
         }
         // 与角色已绑定的权限不能删除
-        boolean existsed = baseMapper.existsRolePermission(id);
-        if (existsed) {
+        boolean existed = baseMapper.existsRolePermission(id);
+        if (existed) {
             throw new ServiceException("已绑定角色，不能删除");
         }
 

@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class SysQuartzJobService extends BaseService<SysQuartzJobMapper, SysQuartzJob> {
-    private final SysQuartzJobMapstruct mapstruct;
+    private final SysQuartzJobMapstruct sysQuartzJobMapstruct;
 
     /**
      * 分页查询
@@ -36,7 +36,7 @@ public class SysQuartzJobService extends BaseService<SysQuartzJobMapper, SysQuar
         QueryWrapper<SysQuartzJob> queryWrapper = QueryHelper.ofBean(query);
         IPage<SysQuartzJob> page = QueryHelper.toPage(query);
         page = baseMapper.selectPage(page, queryWrapper);
-        List<QuartzJobDTO> res = mapstruct.toDTOList(page.getRecords());
+        List<QuartzJobDTO> res = sysQuartzJobMapstruct.toDTOList(page.getRecords());
         return QueryHelper.toJsfPage(page, res);
     }
 
@@ -48,7 +48,7 @@ public class SysQuartzJobService extends BaseService<SysQuartzJobMapper, SysQuar
      */
     public QuartzJobDTO getById(String id) {
         SysQuartzJob sysQuartzJob = baseMapper.selectById(id);
-        return mapstruct.toDTO(sysQuartzJob);
+        return sysQuartzJobMapstruct.toDTO(sysQuartzJob);
     }
 
     /**
@@ -58,7 +58,7 @@ public class SysQuartzJobService extends BaseService<SysQuartzJobMapper, SysQuar
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(QuartzJobDTO dto) {
-        SysQuartzJob sysQuartzJob = mapstruct.toEntity(dto);
+        SysQuartzJob sysQuartzJob = sysQuartzJobMapstruct.toEntity(dto);
         baseMapper.insert(sysQuartzJob);
     }
 
@@ -70,7 +70,7 @@ public class SysQuartzJobService extends BaseService<SysQuartzJobMapper, SysQuar
     @Transactional(rollbackFor = Exception.class)
     public void update(QuartzJobDTO dto) {
         SysQuartzJob entity = baseMapper.selectById(dto.getId());
-        SysQuartzJob sysQuartzJob = mapstruct.toEntity(dto);
+        SysQuartzJob sysQuartzJob = sysQuartzJobMapstruct.toEntity(dto);
         BeanUtil.copyProperties(sysQuartzJob, entity, CopyOptions.create().setIgnoreNullValue(true));
         baseMapper.updateById(entity);
     }

@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class BasPermissionService extends BaseService<BasPermissionMapper, BasPermission> {
-    private final BasPermissionMapstruct mapstruct;
+    private final BasPermissionMapstruct basPermissionMapstruct;
     @Lazy
     @Resource
     private BasRoleService basRoleService;
@@ -52,7 +52,7 @@ public class BasPermissionService extends BaseService<BasPermissionMapper, BasPe
         }
         List<String> roleIds = CollectionUtil.listToList(roles, BasRole::getId);
         List<BasPermission> basPermissions = findByRoleIds(roleIds);
-        return mapstruct.toPermissionDTOList(basPermissions);
+        return basPermissionMapstruct.toPermissionDTOList(basPermissions);
     }
 
     /**
@@ -103,7 +103,7 @@ public class BasPermissionService extends BaseService<BasPermissionMapper, BasPe
             return null;
         }
         List<BasPermission> res = baseMapper.findByProductId(org.getProductId());
-        return mapstruct.toDTOList(res);
+        return basPermissionMapstruct.toDTOList(res);
     }
 
 

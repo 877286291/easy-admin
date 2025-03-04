@@ -18,7 +18,7 @@ import top.houyuji.sys.service.mapstruct.SysOssConfigMapstruct;
 @Slf4j
 @RequiredArgsConstructor
 public class SysTenantOssConfigService extends BaseService<SysOssConfigMapper, SysOssConfig> {
-    private final SysOssConfigMapstruct mapstruct;
+    private final SysOssConfigMapstruct sysOssConfigMapstruct;
 
     /**
      * 根据商户编码查询
@@ -28,7 +28,7 @@ public class SysTenantOssConfigService extends BaseService<SysOssConfigMapper, S
      */
     public OssConfigDTO findBySysCode(String sysCode) {
         SysOssConfig sysOssConfig = baseMapper.findBySysCode(sysCode);
-        return mapstruct.toDTO(sysOssConfig);
+        return sysOssConfigMapstruct.toDTO(sysOssConfig);
     }
 
     /**
@@ -38,7 +38,7 @@ public class SysTenantOssConfigService extends BaseService<SysOssConfigMapper, S
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(OssConfigDTO dto) {
-        SysOssConfig sysOssConfig = mapstruct.toEntity(dto);
+        SysOssConfig sysOssConfig = sysOssConfigMapstruct.toEntity(dto);
         SysOssConfig entity = getById(dto.getId());
         if (StrUtil.isBlank(dto.getId())) {
             entity = sysOssConfig;

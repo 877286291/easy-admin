@@ -32,7 +32,7 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 public class BasUserService extends BaseService<BasUserMapper, BasUser> {
-    private final BasUserMapstruct mapstruct;
+    private final BasUserMapstruct basUserMapstruct;
     @Lazy
     @Resource
     private BasOrgService orgService;
@@ -171,7 +171,7 @@ public class BasUserService extends BaseService<BasUserMapper, BasUser> {
             throw new ServiceException("账号数量已达上限");
         }
         dto.setUsername(username + "@" + dto.getSysCode());
-        BasUser user = mapstruct.toEntity(dto);
+        BasUser user = basUserMapstruct.toEntity(dto);
         user.setSystem(false);
         save(user);
         // 保存用户角色
@@ -203,7 +203,7 @@ public class BasUserService extends BaseService<BasUserMapper, BasUser> {
         }
         dto.setPassword(null);
         dto.setUsername(null);
-        BasUser user = mapstruct.toEntity(dto);
+        BasUser user = basUserMapstruct.toEntity(dto);
         user.setSystem(false);
         BeanUtil.copyProperties(user, entity, CopyOptions.create().setIgnoreNullValue(true));
         updateById(entity);

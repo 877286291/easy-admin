@@ -26,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BasNoticeService extends ServiceImpl<BasNoticeRecordMapper, BasNoticeRecord> {
     private final SysNoticeService sysNoticeService;
-    private final BasNoticeMapstruct mapstruct;
+    private final BasNoticeMapstruct basNoticeMapstruct;
 
     /**
      * 查询未读消息数量
@@ -55,7 +55,7 @@ public class BasNoticeService extends ServiceImpl<BasNoticeRecordMapper, BasNoti
         QueryWrapper<SysNotice> queryWrapper = QueryHelper.ofBean(query);
         IPage<SysNotice> page = QueryHelper.toPage(query);
         page = sysNoticeService.page(page, queryWrapper);
-        List<BasNoticeDTO> res = mapstruct.toDTOList(page.getRecords());
+        List<BasNoticeDTO> res = basNoticeMapstruct.toDTOList(page.getRecords());
         res.forEach(
                 notice -> isRead(notice, noticeIds)
         );

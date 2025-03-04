@@ -37,8 +37,8 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 public class SysTenantPermissionService extends BaseService<SysTenantPermissionMapper, SysTenantPermission> {
-    private final SysPermissionSaveMapstruct permissionSaveMapstruct;
-    private final SysPermissionMapstruct permissionMapstruct;
+    private final SysPermissionSaveMapstruct sysPermissionSaveMapstruct;
+    private final SysPermissionMapstruct sysPermissionMapstruct;
     @Lazy
     @Resource
     private BasOrgService basOrgService;
@@ -60,7 +60,7 @@ public class SysTenantPermissionService extends BaseService<SysTenantPermissionM
                 .orderByAsc(SysTenantPermission::getRank);
 
         List<SysTenantPermission> permissions = list(queryWrapper);
-        return permissionMapstruct.tenantToDTOList(permissions);
+        return sysPermissionMapstruct.tenantToDTOList(permissions);
     }
 
     /**
@@ -72,7 +72,7 @@ public class SysTenantPermissionService extends BaseService<SysTenantPermissionM
     public List<PermissionDTO> listByQuery(PermissionQuery query) {
         QueryWrapper<SysTenantPermission> queryWrapper = QueryHelper.ofBean(query);
         List<SysTenantPermission> permissions = list(queryWrapper);
-        return permissionMapstruct.tenantToDTOList(permissions);
+        return sysPermissionMapstruct.tenantToDTOList(permissions);
     }
 
     /**
@@ -82,7 +82,7 @@ public class SysTenantPermissionService extends BaseService<SysTenantPermissionM
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(PermissionSaveDTO dto) {
-        SysTenantPermission permission = permissionSaveMapstruct.toTenant(dto);
+        SysTenantPermission permission = sysPermissionSaveMapstruct.toTenant(dto);
         save(permission);
     }
 
@@ -93,7 +93,7 @@ public class SysTenantPermissionService extends BaseService<SysTenantPermissionM
      */
     @Transactional(rollbackFor = Exception.class)
     public void updateById(PermissionSaveDTO dto) {
-        SysTenantPermission permission = permissionSaveMapstruct.toTenant(dto);
+        SysTenantPermission permission = sysPermissionSaveMapstruct.toTenant(dto);
         if (null == permission.getId()) {
             throw new ServiceException("id不能为空");
         }

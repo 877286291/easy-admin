@@ -29,7 +29,7 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 public class BasRoleService extends BaseService<BasRoleMapper, BasRole> {
-    private final BasRoleMapstruct mapstruct;
+    private final BasRoleMapstruct basRoleMapstruct;
 
     /**
      * 根据用户ID获取角色
@@ -96,7 +96,7 @@ public class BasRoleService extends BaseService<BasRoleMapper, BasRole> {
         IPage<BasRole> page = QueryHelper.toPage(query);
         page = baseMapper.selectPage(page, queryWrapper);
 
-        List<BasRoleDTO> res = mapstruct.toDTOList(page.getRecords());
+        List<BasRoleDTO> res = basRoleMapstruct.toDTOList(page.getRecords());
         return QueryHelper.toJsfPage(page, res);
     }
 
@@ -109,7 +109,7 @@ public class BasRoleService extends BaseService<BasRoleMapper, BasRole> {
     public List<BasRoleDTO> list(BasRoleQuery query) {
         QueryWrapper<BasRole> queryWrapper = QueryHelper.ofBean(query);
         List<BasRole> res = baseMapper.selectList(queryWrapper);
-        return mapstruct.toDTOList(res);
+        return basRoleMapstruct.toDTOList(res);
     }
 
     /**
@@ -128,7 +128,7 @@ public class BasRoleService extends BaseService<BasRoleMapper, BasRole> {
      * @param dto 角色
      */
     public void save(BasRoleDTO dto) {
-        BasRole entity = mapstruct.toEntity(dto);
+        BasRole entity = basRoleMapstruct.toEntity(dto);
         Boolean existsCode = existsCode(entity.getCode(), dto.getSysCode(), entity.getId());
         if (existsCode) {
             throw new ServiceException("code已存在");
@@ -153,7 +153,7 @@ public class BasRoleService extends BaseService<BasRoleMapper, BasRole> {
         if (Boolean.TRUE.equals(entity.getSystem())) {
             throw new ServiceException("系统角色不允许修改");
         }
-        BasRole update = mapstruct.toEntity(dto);
+        BasRole update = basRoleMapstruct.toEntity(dto);
         BeanUtil.copyProperties(update, entity, CopyOptions.create().ignoreNullValue());
         updateById(entity);
     }

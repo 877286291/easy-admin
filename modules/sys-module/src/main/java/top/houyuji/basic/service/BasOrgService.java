@@ -24,7 +24,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class BasOrgService extends BaseService<BasOrgMapper, BasOrg> {
-    private final BasOrgMapstruct mapstruct;
+    private final BasOrgMapstruct basOrgMapstruct;
 
     /**
      * 登录时，校验相关机构是否过期
@@ -179,7 +179,7 @@ public class BasOrgService extends BaseService<BasOrgMapper, BasOrg> {
     public List<BasOrgDTO> list(BasOrgTreeQuery query) {
         QueryWrapper<BasOrg> queryWrapper = QueryHelper.ofBean(query);
         List<BasOrg> list = baseMapper.selectList(queryWrapper);
-        return mapstruct.toDTOList(list);
+        return basOrgMapstruct.toDTOList(list);
     }
 
     /**
@@ -191,7 +191,7 @@ public class BasOrgService extends BaseService<BasOrgMapper, BasOrg> {
     public List<BasOrgDTO> list(BasOrgQuery query) {
         QueryWrapper<BasOrg> queryWrapper = QueryHelper.ofBean(query);
         List<BasOrg> list = baseMapper.selectList(queryWrapper);
-        return mapstruct.toDTOList(list);
+        return basOrgMapstruct.toDTOList(list);
     }
 
 
@@ -204,7 +204,7 @@ public class BasOrgService extends BaseService<BasOrgMapper, BasOrg> {
     public void save(BasOrgDTO dto) {
         validateOrg(dto, false);
         BasOrg parentOrg = getById(dto.getParentId());
-        BasOrg entity = mapstruct.toEntity(dto);
+        BasOrg entity = basOrgMapstruct.toEntity(dto);
         //设置机构路径
         entity.setPath(parentOrg.getPath() + "," + entity.getId());
         // 设置机构层级
