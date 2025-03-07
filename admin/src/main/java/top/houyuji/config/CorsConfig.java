@@ -1,26 +1,27 @@
 package top.houyuji.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 // 请求跨域
 @Configuration
-public class CorsConfig implements WebMvcConfigurer {
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        //添加映射路径
-        registry.addMapping("/**")
-                //是否发送Cookie
-                .allowCredentials(true)
-                //设置放行哪些原始域
-                .allowedOriginPatterns("*")
-                //放行哪些请求方式
-                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
-                //.allowedMethods("*") //或者放行全部
-                //放行哪些原始请求头部信息
-                .allowedHeaders("*")
-                //暴露哪些原始请求头部信息
-                .exposedHeaders("*");
+public class CorsConfig {
+
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.addAllowedOrigin("*"); // 允许所有来源
+        corsConfig.addAllowedMethod("*"); // 允许所有HTTP方法
+        corsConfig.addAllowedHeader("*"); // 允许所有HTTP标头
+        // 项目使用了 sa-token,并且是使用 token 前后端分离的方式，并不是使用 cookies传递用户token，所以要设置为false
+        corsConfig.setAllowCredentials(false); // 允许携带身份信息（如Cookies）
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return new CorsFilter(source);
     }
 }
