@@ -10,7 +10,7 @@ import top.houyuji.basic.domain.dto.BasPermissionDTO;
 import top.houyuji.basic.service.BasPermissionService;
 import top.houyuji.common.base.R;
 import top.houyuji.common.base.utils.TreeUtil;
-import top.houyuji.satoken.utils.SaTokenUtil;
+import top.houyuji.common.satoken.utils.SaTokenUtil;
 
 import java.util.List;
 

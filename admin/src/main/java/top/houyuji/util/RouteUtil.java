@@ -5,8 +5,8 @@ import lombok.experimental.UtilityClass;
 import top.houyuji.common.base.enums.MenuTypeEnums;
 import top.houyuji.common.base.utils.CollectionUtil;
 import top.houyuji.common.base.utils.TreeUtil;
-import top.houyuji.satoken.domain.vo.RouteMetaVO;
-import top.houyuji.satoken.domain.vo.RouteVO;
+import top.houyuji.common.satoken.domain.vo.RouteMetaVO;
+import top.houyuji.common.satoken.domain.vo.RouteVO;
 import top.houyuji.sys.domain.dto.PermissionDTO;
 
 import java.util.ArrayList;

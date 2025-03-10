@@ -16,7 +16,7 @@ import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.R;
 import top.houyuji.common.base.utils.PasswordUtil;
 import top.houyuji.common.base.utils.StrUtil;
-import top.houyuji.satoken.utils.SaTokenUtil;
+import top.houyuji.common.satoken.utils.SaTokenUtil;
 import top.houyuji.sys.domain.dto.UserRestPwdDTO;
 
 import java.util.List;

@@ -12,7 +12,7 @@ import top.houyuji.basic.service.BasOrgService;
 import top.houyuji.common.base.R;
 import top.houyuji.common.base.utils.StrUtil;
 import top.houyuji.common.base.utils.TreeUtil;
-import top.houyuji.satoken.utils.SaTokenUtil;
+import top.houyuji.common.satoken.utils.SaTokenUtil;
 
 import java.util.List;
 

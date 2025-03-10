@@ -13,10 +13,5 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>top.houyuji</groupId>
-            <artifactId>common-xxl-job</artifactId>
-            <version>${revision}</version>
-        </dependency>
     </dependencies>
 </project>

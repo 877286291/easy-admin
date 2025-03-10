@@ -14,8 +14,8 @@ import top.houyuji.basic.service.BasRoleService;
 import top.houyuji.basic.service.BasUserService;
 import top.houyuji.common.base.exception.UsernameNotFoundException;
 import top.houyuji.common.base.utils.StrUtil;
-import top.houyuji.satoken.domain.dto.UserInfoDTO;
-import top.houyuji.satoken.domain.dto.UserOrgInfoDTO;
+import top.houyuji.common.satoken.domain.dto.UserInfoDTO;
+import top.houyuji.common.satoken.domain.dto.UserOrgInfoDTO;
 import top.houyuji.sys.domain.entity.SysPermission;
 import top.houyuji.sys.domain.entity.SysRole;
 import top.houyuji.sys.domain.entity.SysUser;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class UserLoginService implements top.houyuji.satoken.service.UserLoginService {
+public class UserLoginService implements top.houyuji.common.satoken.service.UserLoginService {
     private final SysUserService sysUserService;
     private final SysRoleService sysRoleService;
     private final SysPermissionService sysPermissionService;

@@ -14,7 +14,7 @@ import top.houyuji.basic.service.BasRoleService;
 import top.houyuji.common.api.BaseQuery;
 import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.R;
-import top.houyuji.satoken.utils.SaTokenUtil;
+import top.houyuji.common.satoken.utils.SaTokenUtil;
 
 import java.util.List;
 

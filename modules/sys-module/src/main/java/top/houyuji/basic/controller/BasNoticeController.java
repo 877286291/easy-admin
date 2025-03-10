@@ -11,9 +11,9 @@ import top.houyuji.basic.service.BasNoticeService;
 import top.houyuji.common.api.BaseQuery;
 import top.houyuji.common.api.JsfPage;
 import top.houyuji.common.base.R;
-import top.houyuji.satoken.domain.dto.UserInfoDTO;
-import top.houyuji.satoken.domain.dto.UserOrgInfoDTO;
-import top.houyuji.satoken.utils.SaTokenUtil;
+import top.houyuji.common.satoken.domain.dto.UserInfoDTO;
+import top.houyuji.common.satoken.domain.dto.UserOrgInfoDTO;
+import top.houyuji.common.satoken.utils.SaTokenUtil;
 
 import java.util.List;
 
